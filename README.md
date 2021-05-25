@@ -8,6 +8,7 @@ BWAPI bot playing Terran in StarCraft Broodwar
 - using BaseFinder by Jaj22  
 - thanks for the help in SSCAIT discord chat: N00byEdge and others  
 
+Links:
 
 - Liquipedia page: https://liquipedia.net/starcraft/WillyT  
 - The API: https://github.com/bwapi/bwapi  
