@@ -1,0 +1,193 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{2E63AE74-758A-4607-9DE4-D28E814A6E13}</ProjectGuid>
+    <RootNamespace>ExampleAIModule</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+    <ProjectName>WillyT</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</LinkIncremental>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>../include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>NOMINMAX;WIN32;_DEBUG;_WINDOWS;_USRDLL;EXAMPLEAIMODULE_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+    </ClCompile>
+    <PreLinkEvent />
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <ImportLibrary>$(IntDir)$(TargetName).lib</ImportLibrary>
+      <TargetMachine>MachineX86</TargetMachine>
+      <AdditionalDependencies>$(BWAPI_DIR)/Debug/BWAPILIB.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(BWAPI_DIR)\include</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <AdditionalIncludeDirectories>$(BWAPI_DIR)\include;$(BWAPI_DIR)\include\BWAPI;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>NOMINMAX;WIN32;NDEBUG;_WINDOWS;_USRDLL;EXAMPLEAIMODULE_EXPORTS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+    </ClCompile>
+    <PreLinkEvent />
+    <Link>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <ImportLibrary>$(IntDir)$(TargetName).lib</ImportLibrary>
+      <TargetMachine>MachineX86</TargetMachine>
+      <AdditionalDependencies>$(SolutionDir)$(Configuration)\BWAPILIB.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="Source\ArmyManager.cpp" />
+    <ClCompile Include="Source\ArmyAttacker.cpp" />
+    <ClCompile Include="Source\ArmyPositions.cpp" />
+    <ClCompile Include="Source\BaseFinderJaj22.cpp" />
+    <ClCompile Include="Source\BuildDefense.cpp" />
+    <ClCompile Include="Source\BuildPlanner.cpp" />
+    <ClCompile Include="Source\BunkerManager.cpp" />
+    <ClCompile Include="Source\Cleaner.cpp" />
+    <ClCompile Include="Source\ComsatManager.cpp" />
+    <ClCompile Include="Source\EnemyUtilities.cpp" />
+    <ClCompile Include="Source\ExpoUtilities.cpp" />
+    <ClCompile Include="Source\Fighter2.cpp" />
+    <ClCompile Include="Source\FloatControl.cpp" />
+    <ClCompile Include="Source\Flyer.cpp" />
+    <ClCompile Include="Source\Grouper.cpp" />
+    <ClCompile Include="Source\Learner.cpp" />
+    <ClCompile Include="Source\MicroUtilities.cpp" />
+    <ClCompile Include="Source\DropManager.cpp" />
+    <ClCompile Include="Source\Reaction.cpp" />
+    <ClCompile Include="Source\TargetFinder.cpp" />
+    <ClCompile Include="Source\WillytBuild.cpp" />
+    <ClCompile Include="Source\BuildManager.cpp" />
+    <ClCompile Include="Source\BuildGenerator.cpp" />
+    <ClCompile Include="Source\ArmyUtilities.cpp" />
+    <ClCompile Include="Source\Dll.cpp" />
+    <ClCompile Include="Source\ExpoFinder.cpp" />
+    <ClCompile Include="Source\ExpoManager.cpp" />
+    <ClCompile Include="Source\Info.cpp" />
+    <ClCompile Include="Source\MapAnalysis.cpp" />
+    <ClCompile Include="Source\MapInfluence.cpp" />
+    <ClCompile Include="Source\MapInfo.cpp" />
+    <ClCompile Include="Source\MapUtilities.cpp" />
+    <ClCompile Include="Source\MiningManager.cpp" />
+    <ClCompile Include="Source\ReadWrite.cpp" />
+    <ClCompile Include="Source\Repair.cpp" />
+    <ClCompile Include="Source\SCV.cpp" />
+    <ClCompile Include="Source\WillytEnemy.cpp" />
+    <ClCompile Include="Source\WillytExpo.cpp" />
+    <ClCompile Include="Source\WillyThreat.cpp" />
+    <ClCompile Include="Source\WillytState.cpp" />
+    <ClCompile Include="Source\Trainer.cpp" />
+    <ClCompile Include="Source\WillytUnits.cpp" />
+    <ClCompile Include="Source\Upgrader.cpp" />
+    <ClCompile Include="Source\Utilities.cpp" />
+    <ClCompile Include="Source\WillytAI.cpp" />
+    <ClCompile Include="Source\WillytMap.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="Source\ArmyManager.h" />
+    <ClInclude Include="Source\ArmyAttacker.h" />
+    <ClInclude Include="Source\ArmyPositions.h" />
+    <ClInclude Include="Source\BaseFinderJaj22.h" />
+    <ClInclude Include="Source\BuildDefense.h" />
+    <ClInclude Include="Source\BuildPlanner.h" />
+    <ClInclude Include="Source\BunkerManager.h" />
+    <ClInclude Include="Source\Cleaner.h" />
+    <ClInclude Include="Source\ComsatManager.h" />
+    <ClInclude Include="Source\EnemyUtilities.h" />
+    <ClInclude Include="Source\ExpoUtilities.h" />
+    <ClInclude Include="Source\Fighter2.h" />
+    <ClInclude Include="Source\FloatControl.h" />
+    <ClInclude Include="Source\Flyer.h" />
+    <ClInclude Include="Source\Grouper.h" />
+    <ClInclude Include="Source\Learner.h" />
+    <ClInclude Include="Source\MicroUtilities.h" />
+    <ClInclude Include="Source\DropManager.h" />
+    <ClInclude Include="Source\Reaction.h" />
+    <ClInclude Include="Source\TargetFinder.h" />
+    <ClInclude Include="Source\WillytBuild.h" />
+    <ClInclude Include="Source\BuildManager.h" />
+    <ClInclude Include="Source\BuildGenerator.h" />
+    <ClInclude Include="Source\ArmyUtilities.h" />
+    <ClInclude Include="Source\WillytEnemy.h" />
+    <ClInclude Include="Source\WillytExpo.h" />
+    <ClInclude Include="Source\ExpoFinder.h" />
+    <ClInclude Include="Source\ExpoManager.h" />
+    <ClInclude Include="Source\Info.h" />
+    <ClInclude Include="Source\MapAnalysis.h" />
+    <ClInclude Include="Source\MapInfluence.h" />
+    <ClInclude Include="Source\MapInfo.h" />
+    <ClInclude Include="Source\MapUtilities.h" />
+    <ClInclude Include="Source\MiningManager.h" />
+    <ClInclude Include="Source\ReadWrite.h" />
+    <ClInclude Include="Source\Repair.h" />
+    <ClInclude Include="Source\SCV.h" />
+    <ClInclude Include="Source\WillyThreat.h" />
+    <ClInclude Include="Source\WillytState.h" />
+    <ClInclude Include="Source\Trainer.h" />
+    <ClInclude Include="Source\WillytUnits.h" />
+    <ClInclude Include="Source\Upgrader.h" />
+    <ClInclude Include="Source\Utilities.h" />
+    <ClInclude Include="Source\WillytAI.h" />
+    <ClInclude Include="Source\WillytMap.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
