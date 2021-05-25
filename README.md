@@ -6,7 +6,7 @@ BWAPI bot playing Terran in StarCraft Broodwar
 //inspired by Oleg Ostroumovs bio+scv rush
 //using BWAPI 4.4.0
 //using BaseFinder by Jaj22
-//thanks for the help in SSCAIT discord chat: N00byEdge and others
+//thanks for the help in SSCAIT discord chat: N00byEdge and others 
 
 Liquipedia page: https://liquipedia.net/starcraft/WillyT
 
