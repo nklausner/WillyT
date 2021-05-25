@@ -12,6 +12,6 @@ Links:
 
 - Liquipedia page: https://liquipedia.net/starcraft/WillyT  
 - The API: https://github.com/bwapi/bwapi  
-- Tournament/Ladder: https://sscaitournament.com/  
-- Ladder: https://www.basil-ladder.net/  
+- Tournament/Ladder/Stream: https://sscaitournament.com/  
+- Ladder/Statitics: https://www.basil-ladder.net/  
 
