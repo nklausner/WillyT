@@ -8,8 +8,9 @@ BWAPI bot playing Terran in StarCraft Broodwar
 - using BaseFinder by Jaj22  
 - thanks for the help in SSCAIT discord chat: N00byEdge and others  
 
-Liquipedia page: https://liquipedia.net/starcraft/WillyT  
-The API: https://github.com/bwapi/bwapi  
-Tournament/Ladder: https://sscaitournament.com/  
-Ladder: https://www.basil-ladder.net/  
+
+- Liquipedia page: https://liquipedia.net/starcraft/WillyT  
+- The API: https://github.com/bwapi/bwapi  
+- Tournament/Ladder: https://sscaitournament.com/  
+- Ladder: https://www.basil-ladder.net/  
 
