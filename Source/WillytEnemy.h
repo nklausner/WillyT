@@ -20,6 +20,7 @@ namespace wilenemy
 	extern std::string name;
 	extern std::string score;
 	extern int result[8];
+	extern std::vector<std::string> history;
 
 	//enemy building positions
 

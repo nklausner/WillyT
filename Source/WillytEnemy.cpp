@@ -6,6 +6,7 @@ namespace wilenemy
 	std::string name = "enemies";
 	std::string score = "0-0";
 	int result[8] = { 0 };
+	std::vector<std::string> history;
 
 	std::vector<BWAPI::Position> positions;
 	std::vector<BWAPI::Position> main_pos;

@@ -1,20 +1,46 @@
 #include "Learner.h"
 
-int choose_strategy( std::vector<std::string> &my_data )
+int choose_strategy(  )
 {
 	wilenemy::name = write_name();
-	count_results(my_data);
+	wilenemy::history = filter_results(read_learning_data(wilenemy::name));
+	count_results();
 	wilenemy::score = write_score();
 	return analyze_results_random();
 }
 
-void count_results(std::vector<std::string> &my_data)
+std::vector<std::string> filter_results(std::vector<std::string> &my_data)
 {
-	for (std::string my_line : my_data) {
+	if (!my_data.empty() && my_data.back() == "unfiltered")
+	{
+		my_data.pop_back();
+		std::vector<std::string> filtered_data;
+		std::string new_line;
+		for (std::string my_line : my_data)
+		{
+			std::vector<std::string> s = split_line(my_line);
+			if (s.size() == 5 && s[1] == wilenemy::name) {
+				new_line = s[0] + "," + s[2] + "," + s[3] + "," + s[4];
+				filtered_data.push_back(new_line);
+			}
+		}
+		if (!filtered_data.empty()) {
+			BWAPI::Broodwar->printf("filtered results by %s", wilenemy::name.c_str());
+		}
+		else {
+			BWAPI::Broodwar->printf("no results found for %s", wilenemy::name.c_str());
+		}
+		return filtered_data;
+	}
+	return my_data;
+}
+
+void count_results()
+{
+	for (std::string my_line : wilenemy::history) {
 		std::vector<std::string> my_split = split_line(my_line);
-		if (my_split.size() == 5 &&
-			my_split.at(1) == wilenemy::name) {
-			int e = 2 * std::stoi(my_split.at(3)) - std::stoi(my_split.at(4)) - 1;
+		if (my_split.size() == 4) {
+			int e = 2 * std::stoi(my_split[2]) - std::stoi(my_split[3]) - 1;
 			if (e >= 0 && e < sizeof(wilenemy::result) / 4) {
 				wilenemy::result[e]++;
 			}
@@ -107,6 +133,30 @@ std::string write_score()
 		s += (i % 2 == 0) ? "-" : " ";
 	}
 	return s;
+}
+
+void add_result_to_history(bool& iswin)
+{
+	//assemble new entry and add it to history
+	std::string new_line;
+	new_line += write_date() + ",";
+	new_line += wilenemy::race.toString().substr(0, 1) + ",";
+	new_line += "0" + std::to_string(willyt::orig_strategy) + ",";
+	new_line += iswin ? "1" : "0";
+	wilenemy::history.push_back(new_line);
+}
+
+std::string write_date()
+{
+	//generate string components of the date
+	std::time_t timer = std::time(0);
+	std::tm* tinfo = std::localtime(&timer);
+	std::string syear = std::to_string(tinfo->tm_year + 1900);
+	std::string smont = std::to_string(tinfo->tm_mon + 1);
+	std::string smday = std::to_string(tinfo->tm_mday);
+	if (smont.length() == 1) { smont.insert(0, "0"); }
+	if (smday.length() == 1) { smday.insert(0, "0"); }
+	return (syear + smont + smday);
 }
 
 std::vector<std::string> split_line(std::string my_line)

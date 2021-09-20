@@ -5,7 +5,7 @@ void WillytAI::onStart()
 	willyt::test_strategy = 0;		//zero for no testing
 	willyt::avoid_weak_strategies = true;
 	willyt::use_hardcoded_strategies = false;
-	willyt::strategy = choose_strategy( read_logfile() );
+	willyt::strategy = choose_strategy();
 	willyt::orig_strategy = willyt::strategy;
 
 	willyt::is_vs_human = false;
@@ -35,7 +35,8 @@ void WillytAI::onStart()
 
 void WillytAI::onEnd(bool isWinner)
 {
-	BWAPI::Broodwar->sendText( write_logfile(wilenemy::name, wilenemy::race.toString(), willyt::orig_strategy, isWinner) );
+	add_result_to_history(isWinner);
+	BWAPI::Broodwar->sendText(write_logfile(wilenemy::history, wilenemy::name).c_str());
 	BWAPI::Broodwar->sendText("gg");
 	return;
 }
