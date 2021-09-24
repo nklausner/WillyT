@@ -16,6 +16,7 @@
 //defend evaluation
 bool check_base_under_attack();
 bool check_main_or_natu_choke_defense();
+BWAPI::Position check_bunker_def_pos(bool should_attack);
 
 //target finding
 BWAPI::Unit choose_enemy_from(std::vector<BWAPI::Unit>& my_vec);

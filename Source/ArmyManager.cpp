@@ -25,6 +25,7 @@ void ArmyManager::update() {
 
 	willyt::is_swarming = check_swarming(should_attack);
 	willyt::is_choke_def = check_main_or_natu_choke_defense();
+	wilmap::my_bunker_def_pos = check_bunker_def_pos(should_attack);
 	check_militia(under_attack, d);
 	check_cohesion(n);
 	check_flyers(wilunits::wraiths, 4);
@@ -151,6 +152,11 @@ void ArmyManager::check_militia(bool is_under_attack, int def_strength) {
 		call_militia(7);
 		create_repulsive_field_at_enemy_natural();
 		//BWAPI::Broodwar->sendText("It's go time!");
+	}
+	if (willyt::carrier_rush_alert &&
+		!willyt::first_attack) {
+		willyt::first_attack = true;
+		call_militia(6);
 	}
 	if (willyt::sup_mil > 0 &&
 		!willyt::rush_alert &&

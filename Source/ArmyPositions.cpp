@@ -43,6 +43,9 @@ void calculate_army_positions()
 	my_entrance = BWAPI::TilePosition{ linear_interpol_rel(my_natu, center_pos, 0.4f) };
 	willyt::retreat_pos = calculate_retreat_pos(my_main);
 
+	BWAPI::Position bpos = BWAPI::Position(wilmap::natu_def_tile[wilmap::mm][0]);
+	bunker_natu_sqdist = sqdist(my_natu.x, my_natu.y, bpos.x+48, bpos.y+32);
+
 	//armycircle = create_circle_vector(natu_choke_pos[mm], 256);
 	//BWAPI::Broodwar->printf("calculate army positions end");
 	return;

@@ -6,6 +6,7 @@
 #include "WillytEnemy.h"
 
 //2019-02-23: outsourcing upgrades and research
+//2021-09-23: gave marine range priority over siege mode
 
 struct Upgrader
 {

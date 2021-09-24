@@ -19,7 +19,7 @@ void MapInfo::display() {
 	//display_bool_walkpos(wilmap::walkmap, false, BWAPI::Colors::Red);
 	//display_int_walkpos(wilmap::centerdistwalkmap);
 	//display_int_walkpos(wilmap::pathwalkmap);
-	display_bool_walkpos(wilmap::chokewalkmap, true, BWAPI::Colors::Brown);
+	//display_bool_walkpos(wilmap::chokewalkmap, true, BWAPI::Colors::Brown);
 	//display_bool(wilmap::wall_map, true, BWAPI::Colors::Red);
 	//display_bool(wilmap::maindefmap, true, BWAPI::Colors::Green);
 	//display_bool(wilmap::natudefmap, true, BWAPI::Colors::Cyan);
@@ -315,7 +315,10 @@ void MapInfo::display_enemy_positions_surround() {
 void MapInfo::display_holding_bunker() {
 	if (willyt::hold_bunker &&
 		!wilbuild::bunkers.empty()) {
-		BWAPI::Broodwar->drawTextMap(wilbuild::bunkers.front()->getPosition(), "%c hold bunker", BWAPI::Text::Red);
+		BWAPI::Broodwar->drawTextMap(wilbuild::bunkers.front()->getPosition(), "%c HOLD BUNKER!", BWAPI::Text::Red);
+	}
+	if (!is_none(wilmap::my_bunker_def_pos)) {
+		BWAPI::Broodwar->drawTextMap(wilmap::my_bunker_def_pos, "%c DONT VENTURE OUT!", BWAPI::Text::Red);
 	}
 	return;
 }

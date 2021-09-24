@@ -42,6 +42,16 @@ bool check_main_or_natu_choke_defense() {
 	}
 	return false;
 }
+BWAPI::Position check_bunker_def_pos(bool should_attack) {
+	for (BWAPI::Unit u : wilbuild::bunkers) {
+		if (u->getTilePosition() == wilmap::natu_def_tile[wilmap::mm][0] &&
+			!should_attack && !willyt::is_rushing && !willyt::cannon_rush_alert &&
+			wilbuild::commandcenters.size() <= 2) {
+			return u->getPosition();
+		}
+	}
+	return BWAPI::Positions::None;
+}
 
 
 

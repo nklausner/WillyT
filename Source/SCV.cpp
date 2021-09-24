@@ -258,17 +258,17 @@ void SCV::update_militia() {
 	if ((willyt::avoid_grddef && reaching_area(unit, wilthr::grddef)) ||
 		reaching_area(unit, wilthr::grdmap)) {
 		unit->move(secure_pos);
-		draw_arrow(my_pos, secure_pos, BWAPI::Colors::Green);
+		//draw_arrow(my_pos, secure_pos, BWAPI::Colors::Green);
 		return;
 	}
 	BWAPI::Unit my_target = get_target_scv(16384);
 	if (my_target != NULL &&
 		my_target->exists()) {
 		unit->attack(my_target);
-		draw_arrow(my_pos, my_target->getPosition(), BWAPI::Colors::Red);
+		//draw_arrow(my_pos, my_target->getPosition(), BWAPI::Colors::Red);
 	} else if (sqdist(my_pos, attack_pos) > 16384) {
 		unit->move(attack_pos);
-		draw_arrow(my_pos, attack_pos, BWAPI::Colors::Yellow);
+		//draw_arrow(my_pos, attack_pos, BWAPI::Colors::Yellow);
 	}
 	return;
 }
@@ -464,7 +464,7 @@ void SCV::update_repair()
 		damaged_unit->getHitPoints() < damaged_unit->getType().maxHitPoints()) {
 		unit->repair(damaged_unit);
 	}
-	draw_arrow(unit->getPosition(), damaged_unit->getPosition(), BWAPI::Colors::Orange);
+	//draw_arrow(unit->getPosition(), damaged_unit->getPosition(), BWAPI::Colors::Orange);
 	return;
 }
 

@@ -32,6 +32,7 @@ void Upgrader::upgrade_bio() {
 
 	BWAPI::Unit my_academy = find_idle(wilbuild::academies);
 	if (BWAPI::Broodwar->self()->hasResearched(Stim_Packs) == NULL &&
+		(willyt::strategy != 2 || has_U_238) &&
 		wilunits::tcount_medic >= 2 &&
 		my_academy &&
 		my_academy->canResearch(Stim_Packs)) {
@@ -39,8 +40,8 @@ void Upgrader::upgrade_bio() {
 		return;
 	}
 	if (BWAPI::Broodwar->self()->getUpgradeLevel(U_238_Shells) == 0 &&
-		(willyt::siege_started || wilenemy::air_percentage >= 50) &&
-		wilunits::tcount_marine >= 12 &&
+		//(willyt::siege_started || wilenemy::air_percentage >= 50) &&
+		wilunits::tcount_marine >= 8 &&
 		my_academy &&
 		my_academy->canUpgrade(U_238_Shells)) {
 		my_academy->upgrade(U_238_Shells);
@@ -49,7 +50,7 @@ void Upgrader::upgrade_bio() {
 	}
 	if (BWAPI::Broodwar->self()->hasResearched(Optical_Flare) == NULL &&
 		willyt::siege_started &&
-		wilunits::tcount_medic >= 6 &&
+		wilunits::tcount_medic >= 8 &&
 		BWAPI::Broodwar->elapsedTime() >= 1200 &&
 		my_academy &&
 		my_academy->canResearch(Optical_Flare)) {

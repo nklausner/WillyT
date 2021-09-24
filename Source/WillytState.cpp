@@ -54,6 +54,7 @@ namespace willyt
 	bool proxy_alert = false;
 	bool proxy_prod_alert = false;
 	bool cannon_rush_alert = false;
+	bool carrier_rush_alert = false;
 	bool hold_bunker = false;
 	//bool guard_siege = false;
 	bool flyer_attack_airdef = false;
@@ -110,6 +111,8 @@ void StateManager::update(int n_ds)
 		fast_expand = false;
 		break;
 	}
+
+	if (willyt::carrier_rush_alert) { attack_supply = 12; }
 
 	//other stuff
 	if (is_rushing && my_time > 600) { is_rushing = false; }

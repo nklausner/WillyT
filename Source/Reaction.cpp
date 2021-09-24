@@ -8,6 +8,7 @@ void check_all_reactions() {
 	willyt::proxy_prod_alert = check_proxy_prod_buildings();
 	willyt::hold_bunker = check_pressure_on_bunker();
 	check_mega_macro();
+	check_carrier_rush();
 	change_strategies();
 	check_resign();
 	return;
@@ -127,6 +128,20 @@ void check_mega_macro() {
 		wilenemy::goes_megamacro = false;
 		willyt::is_rushing = false;
 		BWAPI::Broodwar->printf("reject enemy strategy: MEGA-MACRO");
+	}
+	return;
+}
+
+void check_carrier_rush() {
+	if (willyt::my_time == 300 &&
+		wilenemy::sem != -1 &&
+		wilenemy::race == BWAPI::Races::Protoss &&
+		wilenemy::airprod_count > 0 &&
+		wilenemy::produc_count - wilenemy::airprod_count - wilenemy::mainbuild_count == 1) {
+		willyt::carrier_rush_alert = true;
+	}
+	if (willyt::my_time == 600) {
+		willyt::carrier_rush_alert = false;
 	}
 	return;
 }

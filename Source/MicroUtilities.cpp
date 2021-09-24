@@ -111,6 +111,17 @@ bool check_defense_siegetile(BWAPI::TilePosition t) {
 
 
 
+bool check_venture_out(BWAPI::Position my_pos) {
+	int bunker_sqdist = sqdist(my_pos, wilmap::my_bunker_def_pos);
+	if (bunker_sqdist <= 25600 &&
+		sqdist(my_pos, wilmap::my_natu) >= bunker_sqdist + wilmap::bunker_natu_sqdist) {
+		return true;
+	}
+	return false;
+}
+
+
+
 void draw_arrow(BWAPI::Position p0, BWAPI::Position p1, BWAPI::Color c) {
 	if (sqdist(p0, p1) <= 65536) {
 		BWAPI::Broodwar->drawLineMap(p0, p1, c);

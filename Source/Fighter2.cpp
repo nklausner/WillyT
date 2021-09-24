@@ -99,6 +99,13 @@ void Fighter2::update()
 	//if (is_attacker) { BWAPI::Broodwar->drawTextMap(posi, "%cATTACK", 6); }
 	//BWAPI::Broodwar->drawTextMap(posi, "%d", attack_queue);
 
+	using namespace BWAPI::UnitTypes;
+	if (!is_none(wilmap::my_bunker_def_pos) &&
+		unit->getType() != Terran_Vulture &&
+		check_venture_out(posi)) {												//--dont venture out (high prio)
+		set_retreat();
+		return;
+	}
 	if (attack_queue == 0 && !is_support && wilenemy::target_count < 16) {		//--medic no targeting!
 		target = get_target_all(attack_sqdst);
 		//BWAPI::Broodwar->drawTextMap(posi, "alert");
@@ -112,7 +119,6 @@ void Fighter2::update()
 		set_retreat();
 		return;
 	}
-	using namespace BWAPI::UnitTypes;
 	switch (unit->getType())
 	{
 	case Terran_Medic:					target = get_target_heal(); break;		//--medic check proximity!
@@ -130,7 +136,7 @@ void Fighter2::update()
 			} else {
 				unit->attack(target);
 				attack_queue = 256;
-				BWAPI::Broodwar->drawLineMap(posi, target->getPosition(), BWAPI::Colors::Red);
+				//BWAPI::Broodwar->drawLineMap(posi, target->getPosition(), BWAPI::Colors::Red);
 
 				//if (unit->getType() == Terran_Vulture) {
 				//	unit->patrol(target->getPosition());
@@ -192,14 +198,14 @@ void Fighter2::update_vulture()
 			int s = unit->getGroundWeaponCooldown() * 8;
 			if (s < d) {
 				unit->patrol(target->getPosition());
-				BWAPI::Broodwar->drawLineMap(posi, target->getPosition(), BWAPI::Colors::Purple);
+				//BWAPI::Broodwar->drawLineMap(posi, target->getPosition(), BWAPI::Colors::Purple);
 				is_looping = false;
 			}
 		}
 		if (unit->getGroundWeaponCooldown() < 15 && !target) {
 			unit->move(destin_pos);
 			is_looping = false;
-			BWAPI::Broodwar->drawLineMap(posi, destin_pos, BWAPI::Colors::Yellow);
+			//BWAPI::Broodwar->drawLineMap(posi, destin_pos, BWAPI::Colors::Yellow);
 		}
 		return;
 	}
@@ -216,14 +222,14 @@ void Fighter2::update_vulture()
 		//unit->patrol(target->getPosition());
 		unit->attack(target);
 		attack_queue = 8;
-		BWAPI::Broodwar->drawLineMap(posi, target->getPosition(), BWAPI::Colors::Purple);
+		//BWAPI::Broodwar->drawLineMap(posi, target->getPosition(), BWAPI::Colors::Purple);
 		return;
 	}
 
 	if (unit->isIdle() && destin_pos.isValid() &&
 		sqdist(posi, destin_pos) >= 16384) {				//get moving
 		unit->move(destin_pos);
-		BWAPI::Broodwar->drawLineMap(posi, destin_pos, BWAPI::Colors::Yellow);
+		//BWAPI::Broodwar->drawLineMap(posi, destin_pos, BWAPI::Colors::Yellow);
 		return;
 	}
 	check_cohesion_retreat();
@@ -275,7 +281,7 @@ void Fighter2::update_raider(int my_state, BWAPI::Position& att_pos, BWAPI::Posi
 void Fighter2::set_retreat() {
 	if (!is_raider) {
 		unit->move(secure_pos);
-		draw_arrow(posi, secure_pos, BWAPI::Colors::Green);
+		//draw_arrow(posi, secure_pos, BWAPI::Colors::Green);
 	}
 }
 void Fighter2::check_cohesion_retreat() {
@@ -285,7 +291,7 @@ void Fighter2::check_cohesion_retreat() {
 		--retreat_queue;
 		if (retreat_queue == 0) {
 			unit->move(destin_pos);
-			draw_arrow(posi, destin_pos, BWAPI::Colors::White);
+			//draw_arrow(posi, destin_pos, BWAPI::Colors::White);
 		}
 		return;
 	}
@@ -296,7 +302,7 @@ void Fighter2::check_cohesion_retreat() {
 	{
 		unit->move(secure_pos);
 		retreat_queue = 32;
-		draw_arrow(posi, secure_pos, BWAPI::Colors::White);
+		//draw_arrow(posi, secure_pos, BWAPI::Colors::White);
 	}
 	return;
 }
@@ -315,7 +321,7 @@ void Fighter2::check_fallb() {
 	if (specials_allowed &&
 		unit->getHitPoints() < 20) {
 		unit->move(secure_pos);
-		draw_arrow(posi, secure_pos, BWAPI::Colors::Green);
+		//draw_arrow(posi, secure_pos, BWAPI::Colors::Green);
 		//BWAPI::Broodwar->drawTextMap(posi, "fall back");
 	}
 	return;

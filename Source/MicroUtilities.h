@@ -21,6 +21,8 @@ BWAPI::Position get_current_target_position(BWAPI::Unit u);
 BWAPI::Position choose_defense_siegetile();
 bool check_defense_siegetile(BWAPI::TilePosition t);
 
+bool check_venture_out(BWAPI::Position my_pos);
+
 void draw_arrow(BWAPI::Position p0, BWAPI::Position p1, BWAPI::Color c);
 void draw_arrow(BWAPI::Unit u, BWAPI::Position p, BWAPI::Color c);
 void draw_arrow(BWAPI::Unit u0, BWAPI::Unit u1, BWAPI::Color c);

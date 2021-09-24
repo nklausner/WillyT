@@ -334,9 +334,13 @@ BWAPI::UnitType BuildManager::check_advanced() {
 	//check_lifting();
 	using namespace wilbuild;
 	using namespace BWAPI::UnitTypes;
-	if (willyt::strategy != 3 && wilenemy::race == BWAPI::Races::Zerg &&
-		barracks.size() < 4 && min >= 200) {
-		return Terran_Barracks;
+	if (willyt::strategy <= 2 && min >= 200) {
+		if (wilenemy::race == BWAPI::Races::Zerg && barracks.size() < 4) {
+			return Terran_Barracks;
+		}
+		if (wilenemy::race == BWAPI::Races::Protoss && barracks.size() < 3) {
+			return Terran_Barracks;
+		}
 	}
 	if (min > 300 && willyt::mineral_count >= 12 &&
 		gas > 200 && willyt::geyser_count >= 2)

@@ -1,0 +1,127 @@
+20190203:
+- stop replicating builders (already implemented, shouldnt happen)
+- doubling of depot building locations (DONE)
+- siegeing within siege attack range (DONE)
+
+- pull back for unsieged tanks (-> new unit agent)
+- adjust and generalize pull back (-> new unit agent)
+
+20190323:
+- rework map analysis (DONE)
+- rework objects and namespaces (in progress)
+- rework unit agent
+
+20190809:
+- upgrade to bwapi 4.4.0 (DONE)
+- stop multiple builders (DONE)
+- generate build plan (DONE)
+- rework defense micro and bunker usage (DONE)
+
+its working but i am not sure if i do the right thing
+also for those who might search for it in future
+`properties->linker->input` has now the following entry
+`$(SolutionDir)$(Configuration)\BWAPILIB.lib;%(AdditionalDependencies)`
+
+20200120:
+- lost geyser after gassteal (DONE)
+- random spider mine missions (DONE)
+- 3rd buildorder with learner (DONE)
+- recognize unfinished defense buildings (DONE)
+- smarter expanding: gas or min-only (DONE)
+
+20200216:
+- essential: GIT (DONE 210525)
+- essential: targeting (basic version DONE)
+- essential: mining optimization (mineral locking DONE 210305)
+- essential: improve choke defense and attack (defense WIP)
+- normal: keep scout in enemy base (DONE)
+- normal: reactions for mech strat (-> 1rax FE, mech, reactions WIP)
+- normal: find free areas for grouping
+- normal: improve army cohesion
+- normal: recognize depot/turret choke block (DONE, indirect)
+- normal: recognize neutral building block
+- normal: storm/lurker/siege areas (DONE: 20200424)
+- fun: science vessel with EMP, defmatrix, irradiate
+- fun: wraith, especially overlord hunt and such
+- fun: spreading of cloaked ghosts, targeting
+
+crash frame hunt: 37126, 28028, 33929, 13603, 10403, 40888, 18492, 31660 "ondiscover start"
+
+20200517:
+- reaction to cannon rush (partly done, need more worker def)
+- anti gas lockdown for top edge of map (DONE)
+- scan tech early mid game and predict army compositions
+- react to lurker rushes and 2-hatch muta (reactive engy/turrets DONE)
+
+20200601:
+- overwhelm stray lurkers/siegetanks (lurkers DONE)
+- stop being so ticklish
+
+20200605:
+- 1raxFE siege: 05:59, 05:55, 05:53, 05:42(!)
+- consecutive building and other tweaks for 1raxFE (DONE)
+- check enemy building position recognition (DONE)
+- faster turret building, no building queue block (DONE)
+
+20200624:
+- recognize trapped scvs
+
+20200916, AIIDE preparition:
+- map test: polarisrhapsody, aztec, longinus, roadkill (DONE)
+- use default choke/defense positions (DONE)
+- any buildmap improvements
+- gather army in front of enemy choke (DONE)
+- bunker and zerg rush behavior (DONE)
+- reduce tank siege defense repositioning (DONE)
+- reduce number of machine shops, new factory training (DONE)
+
+20201001:
+- vessel(!)
+- wraith(!)
+- react to megamacro: suspect expos, build bunker and gather at enemy natural (DONE)
+- reduce minimum turret count
+
+20201215:
+- counter cannon rush (DONE)
+- dont run into enemy threat areas
+- optional avoiding lower winrate strategies (DONE)
+- enabled drops (DONE)
+
+20210113: (SSCAIT conclusions)
+- drops: fix circling, dont count if not started, return ship (DONE)
+- heartbreak ridge: clear block for sure (DONE)
+- handle harassing worker
+- improve scout circling
+- improve evasion
+- found AIIDE read/write failure, more learning bugs (DONE)
+- basil map pool adjustments (DONE)
+- investigate gas steal bunker reaction vs steamhammer (DONE)
+
+20210202: WALL-INs
+- wallin vs zerg and protoss (DONE)
+- floating rax/bay vs terran
+- wallin for natural (strat 2+3) (DONE)
+- wallin for main (strat 1)
+- generate structure via angle(?), test via flood fill(?) (DONE, WIP)
+- lift off behavior (DONE)
+
+20210208: legacy stuff
+- find alternative turret tiles per expansion (DONE)
+- recognize and handle trapped scvs (DONE)
+- avoid doubling build missions - avoid doubling scv objects (DONE)
+- avoid undetected cloaked/burrowed units
+
+20210331: revelation of Bo4 vs SD
+- Bo4 more factories
+- fix building turrets in mineral line
+- fix raider behavior
+- check destroyed enemy base minerals before expand
+
+20210830: pre AIIDE 2021
+- change read/write to file per opponent incl. transition (DONE)
+- get running: basil-ladder/sc-docker (DONE) (thx to hao pan)
+- run tests: UAB, DaQin, McRaveZ, FreshMeat, Steamhammer, Microwave, Stardust, maybe dragon ...
+- 2hatch_muta reaction
+- turret building
+- TvT improvements (floating buildings ...)
+- improve strat 2: +rax(TvP), marine_range, dont run out 

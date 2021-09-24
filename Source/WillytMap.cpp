@@ -45,6 +45,8 @@ namespace wilmap
 	BWAPI::Position my_main_def = BWAPI::Positions::None;
 	BWAPI::Position my_natu_def = BWAPI::Positions::None;
 	BWAPI::TilePosition my_entrance = BWAPI::TilePositions::None;
+	BWAPI::Position my_bunker_def_pos = BWAPI::Positions::None;
+	int bunker_natu_sqdist = 36864;
 
 	BWAPI::TilePosition en_start = BWAPI::TilePositions::None;
 	BWAPI::Position en_main = BWAPI::Positions::None;

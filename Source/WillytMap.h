@@ -61,6 +61,8 @@ namespace wilmap
 	extern BWAPI::Position my_main_def;
 	extern BWAPI::Position my_natu_def;
 	extern BWAPI::TilePosition my_entrance;
+	extern BWAPI::Position my_bunker_def_pos;
+	extern int bunker_natu_sqdist;
 
 	//enemy special locations
 

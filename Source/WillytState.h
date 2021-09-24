@@ -67,6 +67,7 @@ namespace willyt
 	extern bool proxy_alert;
 	extern bool proxy_prod_alert;
 	extern bool cannon_rush_alert;
+	extern bool carrier_rush_alert;
 	extern bool hold_bunker;
 	//extern bool guard_siege;
 	extern bool flyer_attack_airdef;
