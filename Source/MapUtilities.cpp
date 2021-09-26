@@ -189,6 +189,15 @@ int get_direction_8(int x0, int y0, int x1, int y1) {
 		return (dy > 0) ? 3 : 5;		//bot-left or top-left
 	}
 }
+int get_direction_8(BWAPI::Position p0, BWAPI::Position p1) {
+	return get_direction_8(p0.x, p0.y, p1.x, p1.y);
+}
+double get_angle(BWAPI::Position p0, BWAPI::Position p1) {
+	int xr = p1.x - p0.x;
+	int yr = p1.y - p0.y;
+	double r = pow(pow(xr, 2) + pow(yr, 2), 0.5);
+	return (yr < 0) ? -acos(xr / r) : +acos(xr / r);
+}
 
 
 
@@ -295,7 +304,7 @@ void create_circle_r4() {
 	}
 }
 BWAPI::Position get_circle_pos_24(int n, int r0, int i) {
-	r0 = 2 * r0;
+	r0 = 2 * r0 + 4;
 	for (int j = r0; j > 6; j--) {
 		int x = wilmap::main_pos[n].x + ((j * wilmap::cdx24[i]) / 4);
 		int y = wilmap::main_pos[n].y + ((j * wilmap::cdy24[i]) / 4);

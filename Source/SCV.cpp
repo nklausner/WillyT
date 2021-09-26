@@ -14,6 +14,8 @@ SCV::SCV(BWAPI::Unit my_unit)
 	is_trapped = false;
 	has_resource = false;
 	called_transport = false;
+	is_entering = false;
+	transport_unit = NULL;
 
 	destination = BWAPI::Positions::None;
 	expo_pos = BWAPI::Positions::None;
@@ -32,8 +34,8 @@ SCV::SCV(BWAPI::Unit my_unit)
 	damaged_unit = NULL;
 	resource_container = NULL;
 
-	circle_increment = 0;
-	scout_queue = 0;
+	circle_increment = -1;
+	scout_pos = BWAPI::Positions::None;
 	stuck_queue = 0;
 	min_target_distance = 0;
 	//BWAPI::Broodwar->printf("created SCV %d", id);
@@ -53,7 +55,8 @@ void SCV::update()
 {
 	if (!unit->exists() ||
 		unit->isLockedDown() || unit->isMaelstrommed() ||
-		unit->isStasised() || unit->getTransport() != NULL) {
+		unit->isStasised() || unit->getTransport() != NULL ||
+		is_entering) {
 		return;
 	}
 	if (is_builder) {
@@ -472,40 +475,48 @@ void SCV::update_repair()
 
 void SCV::scout()
 {
-	if (scout_queue == 0)
+	if (!wilmap::unscouted.empty())
 	{
-		if (!wilmap::unscouted.empty())
-		{
-			if (unit->getTargetPosition() != wilmap::unscouted.back()) {
-				unit->move(wilmap::unscouted.back());
-				//BWAPI::Broodwar->printf("change scouting target");
-			}
-			//BWAPI::Broodwar->drawTextMap(unit->getPosition(), "tourist");
+		if (unit->getTargetPosition() != wilmap::unscouted.back()) {
+			scout_pos = wilmap::unscouted.back();
+			unit->move(scout_pos);
+			//BWAPI::Broodwar->printf("change scouting target");
 		}
-		else
-		{
-			if (wilenemy::sem == -1 &&
-				unit->getTargetPosition() != wilmap::my_natu) {
-				unit->move(wilmap::my_natu);
-				is_scout = false;
-				//BWAPI::Broodwar->printf("terminate scouting");
-				return; //scout is done, dont continue
-			}
-			BWAPI::Position my_pos = get_circle_pos_24(wilenemy::sem, 13, circle_increment);
-			circle_increment = (circle_increment + 1) % 24;
-			if (my_pos.isValid()) {
-				scout_queue = dist(unit->getPosition(), my_pos) / 8;
-				unit->move(my_pos);
-			}
-		}
+		//BWAPI::Broodwar->drawTextMap(unit->getPosition(), "tourist");
 	}
 	else
 	{
-		scout_queue--;
-		//BWAPI::Broodwar->drawTextMap(unit->getPosition(), "%d", scout_queue);
+		if (wilenemy::sem == -1 &&
+			unit->getTargetPosition() != wilmap::my_natu) {
+			unit->move(wilmap::my_natu);
+			is_scout = false;
+			//BWAPI::Broodwar->printf("terminate scouting");
+			return; //scout is done, dont continue
+		}
+		if (willyt::need_scout_natu &&
+			circle_increment == wilmap::entrance_circle_increment - 1) {
+			scout_pos = wilmap::en_natu;
+			unit->move(scout_pos);
+			willyt::need_scout_natu = false;
+			BWAPI::Broodwar->printf("quick check on  the natural");
+		}
+		if (circle_increment == -1) { // initiate circling
+			circle_increment = (wilmap::entrance_circle_increment != -1) ? wilmap::entrance_circle_increment : 0;
+			scout_circle();
+		}
+		if (sqdist(unit->getPosition(), scout_pos) < 16384) { // continue circling
+			scout_circle();
+		}
 	}
-	//draw_arrow(unit->getPosition(), unit->getTargetPosition(), 255);
+	//draw_arrow(unit->getPosition(), unit->getTargetPosition(), 179);
+	//draw_pos_box(unit->getTargetPosition(), 12, 179);
 	return;
+}
+void SCV::scout_circle()
+{
+	circle_increment = (circle_increment + 1) % 24;
+	scout_pos = get_circle_pos_24(wilenemy::sem, 14, circle_increment);
+	unit->move(scout_pos);
 }
 
 
@@ -554,6 +565,8 @@ void SCV::check_being_trapped(int& count) {
 	}
 	if (called_transport && unit->getTransport()) {
 		called_transport = false;
+		is_entering = false;
+		transport_unit = NULL;
 	}
 
 	destination = get_current_target_position(unit);
@@ -571,6 +584,14 @@ void SCV::check_being_trapped(int& count) {
 			is_trapped = true;
 			count++;
 		}
+	}
+
+	if (transport_unit != NULL &&
+		transport_unit->exists() &&
+		sqdist(transport_unit, unit) < 16) {
+		is_entering = true;
+		unit->rightClick(transport_unit);
+		//BWAPI::Broodwar->printf("scv entering dropship");
 	}
 	//if (!is_none(destination)) {
 	//	BWAPI::Broodwar->drawLineMap(unit->getPosition(), destination, BWAPI::Colors::White);

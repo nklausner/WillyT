@@ -71,6 +71,7 @@ namespace willyt
 	extern bool hold_bunker;
 	//extern bool guard_siege;
 	extern bool flyer_attack_airdef;
+	extern bool need_scout_natu;
 
 	//army positions
 	extern BWAPI::Position retreat_pos;

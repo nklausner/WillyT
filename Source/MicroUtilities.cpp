@@ -142,3 +142,8 @@ void draw_text(BWAPI::Unit u, const char* s, BWAPI::Text::Enum c) {
 	BWAPI::Broodwar->drawTextMap(u->getPosition(), "%c%s", c, s);
 	return;
 }
+void draw_pos_box(BWAPI::Position p, int s, BWAPI::Color c) {
+	if (p.isValid()) {
+		BWAPI::Broodwar->drawBoxMap(p.x - s, p.y - s, p.x + s, p.y + s, c);
+	}
+}

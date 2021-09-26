@@ -27,3 +27,4 @@ void draw_arrow(BWAPI::Position p0, BWAPI::Position p1, BWAPI::Color c);
 void draw_arrow(BWAPI::Unit u, BWAPI::Position p, BWAPI::Color c);
 void draw_arrow(BWAPI::Unit u0, BWAPI::Unit u1, BWAPI::Color c);
 void draw_text(BWAPI::Unit u, const char* s, BWAPI::Text::Enum c);
+void draw_pos_box(BWAPI::Position p, int s, BWAPI::Color c);

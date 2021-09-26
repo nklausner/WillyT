@@ -64,7 +64,7 @@ crash frame hunt: 37126, 28028, 33929, 13603, 10403, 40888, 18492, 31660 "ondisc
 - faster turret building, no building queue block (DONE)
 
 20200624:
-- recognize trapped scvs
+- recognize trapped scvs (DONE)
 
 20200916, AIIDE preparition:
 - map test: polarisrhapsody, aztec, longinus, roadkill (DONE)
@@ -91,7 +91,7 @@ crash frame hunt: 37126, 28028, 33929, 13603, 10403, 40888, 18492, 31660 "ondisc
 - drops: fix circling, dont count if not started, return ship (DONE)
 - heartbreak ridge: clear block for sure (DONE)
 - handle harassing worker
-- improve scout circling
+- improve scout circling (DONE)
 - improve evasion
 - found AIIDE read/write failure, more learning bugs (DONE)
 - basil map pool adjustments (DONE)
@@ -121,7 +121,7 @@ crash frame hunt: 37126, 28028, 33929, 13603, 10403, 40888, 18492, 31660 "ondisc
 - change read/write to file per opponent incl. transition (DONE)
 - get running: basil-ladder/sc-docker (DONE) (thx to hao pan)
 - run tests: UAB, DaQin, McRaveZ, FreshMeat, Steamhammer, Microwave, Stardust, maybe dragon ...
-- 2hatch_muta reaction
+- 2hatch_muta reaction (scout DONE)
 - turret building
 - TvT improvements (floating buildings ...)
-- improve strat 2: +rax(TvP), marine_range, dont run out 
+- improve strat 2: +rax(TvP), marine_range, dont run out (DONE)

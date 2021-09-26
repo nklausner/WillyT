@@ -1,5 +1,6 @@
 #pragma once
 #include <BWAPI.h>
+#include <math.h>
 #include "WillytMap.h"
 #include "Utilities.h"
 
@@ -46,6 +47,9 @@ bool is_rigt(int x, int y);
 int get_direction_4(BWAPI::Position p0, BWAPI::Position p1);
 //find relative position out of 8 directions
 int get_direction_8(int x0, int y0, int x1, int y1);
+int get_direction_8(BWAPI::Position p0, BWAPI::Position p1);
+//find angle between to points (0-2pi)
+double get_angle(BWAPI::Position p0, BWAPI::Position p1);
 
 //get position on circle by index
 BWAPI::Position get_circle_pos(std::vector<BWAPI::Position> &my_vec, int i);

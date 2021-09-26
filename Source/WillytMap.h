@@ -80,6 +80,7 @@ namespace wilmap
 	//scouting and enemy
 
 	extern std::vector<BWAPI::Position> unscouted;
+	extern int entrance_circle_increment;
 
 	//main and natural positions
 

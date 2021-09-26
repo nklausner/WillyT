@@ -21,6 +21,7 @@ bool check_pressure_on_bunker();
 
 void check_mega_macro();
 void check_carrier_rush();
+void check_scout_natu();
 
 void change_strategies();
 void check_resign();

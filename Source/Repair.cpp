@@ -97,6 +97,7 @@ void update_transport()
 					ds.transport_pos = BWAPI::Positions::None;
 					ds.unit->stop();
 					scv.called_transport = false;
+					scv.transport_unit = NULL;
 					//BWAPI::Broodwar->printf("Transport cancelled.");
 					break;
 				}
@@ -115,6 +116,7 @@ void update_transport()
 					ds.transport_unit = scv.unit;
 					ds.transport_pos = scv.destination;
 					scv.called_transport = true;
+					scv.transport_unit = ds.unit;
 					//BWAPI::Broodwar->printf("Calling dropship for transport.");
 					break;
 				}

@@ -94,16 +94,14 @@ void determine_expo_circle() {
 	std::vector<double> airangle;
 	std::vector<double> grdangle;
 
-	int xc = wilmap::wp / 2;
-	int yc = wilmap::hp / 2;
+	int xc = wilmap::center_pos.x;
+	int yc = wilmap::center_pos.y;
 	double rc = pow(pow(xc, 2) + pow(yc, 2), 0.5) / 3.0;
 	for (Expo &expo : wilexpo::all) {
 		int xr = expo.posi.x - xc;
 		int yr = expo.posi.y - yc;
 		double r = pow(pow(xr, 2) + pow(yr, 2), 0.5);
-		double a = 0.0;
-		if (yr <  0) { a = -acos(xr / r); }
-		if (yr >= 0) { a = +acos(xr / r); }
+		double a = (yr < 0) ? -acos(xr / r) : +acos(xr / r);
 		if (r > rc) {
 			aircache.push_back(expo.posi);
 			airangle.push_back(a);

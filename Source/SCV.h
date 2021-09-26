@@ -32,6 +32,8 @@ public:
 	bool is_scout;
 	bool is_trapped;
 	bool called_transport;
+	bool is_entering;
+	BWAPI::Unit transport_unit;
 
 	//positions
 
@@ -66,6 +68,7 @@ private:
 	void build();
 	void update_repair();
 	void scout();
+	void scout_circle();
 	BWAPI::Unit get_target_scv(int r);
 
 	//positions and integers
@@ -89,7 +92,7 @@ private:
 	//other queues and states
 
 	int circle_increment;
-	int scout_queue;
+	BWAPI::Position scout_pos;
 	bool has_resource;
 	int stuck_queue;
 	int min_target_distance;

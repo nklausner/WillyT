@@ -9,6 +9,7 @@ void check_all_reactions() {
 	willyt::hold_bunker = check_pressure_on_bunker();
 	check_mega_macro();
 	check_carrier_rush();
+	check_scout_natu();
 	change_strategies();
 	check_resign();
 	return;
@@ -142,6 +143,16 @@ void check_carrier_rush() {
 	}
 	if (willyt::my_time == 600) {
 		willyt::carrier_rush_alert = false;
+	}
+	return;
+}
+
+void check_scout_natu() {
+	if (willyt::my_time == 270 &&
+		wilenemy::sem != -1 &&
+		wilenemy::race == BWAPI::Races::Zerg &&
+		!wilenemy::has_lair && wilenemy::airprod_count == 0) {
+		willyt::need_scout_natu = true;
 	}
 	return;
 }

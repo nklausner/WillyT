@@ -276,6 +276,7 @@ void EnemyManager::determine_main(BWAPI::Unit unit) {
 				wilmap::en_start = wilmap::main_tiles[i];
 				wilmap::en_main = wilmap::main_pos[i];
 				wilmap::en_natu = wilmap::natu_pos[i];
+				wilmap::entrance_circle_increment = get_direction_8(wilmap::main_pos[i], wilmap::main_choke_pos[i]) * 3;
 				//BWAPI::Broodwar->printf("found 1v1 enemy main");
 			}
 			if (BWAPI::Broodwar->enemies().size() >= 2 || main_pos.empty()) {

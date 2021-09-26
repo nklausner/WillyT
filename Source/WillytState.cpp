@@ -58,6 +58,7 @@ namespace willyt
 	bool hold_bunker = false;
 	//bool guard_siege = false;
 	bool flyer_attack_airdef = false;
+	bool need_scout_natu = false;
 
 	BWAPI::Position retreat_pos = BWAPI::Positions::None;
 	BWAPI::Position gather_pos = BWAPI::Positions::None;

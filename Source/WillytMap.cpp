@@ -58,6 +58,7 @@ namespace wilmap
 	int mm = 0;
 
 	std::vector<BWAPI::Position> unscouted;
+	int entrance_circle_increment = -1;
 
 	BWAPI::Position main_pos[8] = { BWAPI::Positions::None };
 	BWAPI::Position natu_pos[8] = { BWAPI::Positions::None };
