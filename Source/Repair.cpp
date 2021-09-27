@@ -98,6 +98,7 @@ void update_transport()
 					ds.unit->stop();
 					scv.called_transport = false;
 					scv.transport_unit = NULL;
+					scv.is_entering = false;
 					//BWAPI::Broodwar->printf("Transport cancelled.");
 					break;
 				}
