@@ -200,11 +200,12 @@ BWAPI::UnitType BuildManager::check_order_4() {
 	if (s >= 28 && factories.size() < 2)	return Terran_Factory;
 	if (s >= 40 && armories.size() < 1)		return Terran_Armory;
 	if (s >= 40 && academies.size() < 1)	return Terran_Academy;
+	if (s >= 50 && factories.size() < 3)	return Terran_Factory;
 	if (s >= 60 && starports.size() < 1)	return Terran_Starport;
 
 	if (refineries.size() > 2 && min > 600 && gas > 400) {
 		if (s >= 120 && sciencefacs.size() < 1)	return Terran_Science_Facility;
-		if (s >= 120 && factories.size() < 4)	return Terran_Factory;
+		if (s >= 120 && factories.size() < 6)	return Terran_Factory;
 	}
 	return my_type;
 }

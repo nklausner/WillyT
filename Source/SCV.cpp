@@ -588,7 +588,7 @@ void SCV::check_being_trapped(int& count) {
 
 	if (transport_unit != NULL &&
 		transport_unit->exists() &&
-		sqdist(transport_unit, unit) < 16) {
+		sqdist(transport_unit, unit) < 36) {
 		is_entering = true;
 		unit->rightClick(transport_unit);
 		//BWAPI::Broodwar->printf("scv entering dropship");

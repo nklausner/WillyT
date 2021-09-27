@@ -19,8 +19,7 @@ void Trainer::init() {
 		number_fact_per_addon = 2.0;
 	}
 	if (willyt::strategy == 4) {
-		tank_goli_ratio = (wilenemy::race == BWAPI::Races::Zerg) ? 4 : 7;
-		number_fact_per_addon = 1.0;
+		tank_goli_ratio = (wilenemy::race == BWAPI::Races::Zerg) ? 2 : 6;
 	}
 	if (willyt::strategy != 6) {
 		n_dropship++;
@@ -244,7 +243,7 @@ bool Trainer::can_build_goliath() {
 
 
 bool Trainer::bring_it_on() {
-	if (willyt::strategy != 4 &&
+	if (willyt::strategy <= 2 &&
 		wilunits::vultures.size() < wilunits::siegetanks.size() &&
 		BWAPI::Broodwar->self()->minerals() >= BWAPI::Broodwar->elapsedTime() / 2 &&
 		BWAPI::Broodwar->self()->minerals() >= BWAPI::Broodwar->self()->gas() * 2) {
