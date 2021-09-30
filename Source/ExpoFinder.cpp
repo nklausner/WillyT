@@ -27,6 +27,13 @@ void ExpoFinder::check() {
 		add_suspected_expo(4);
 		wilbuild::locking_time = 450;
 	}
+	if (willyt::strategy == 4 &&
+		wilenemy::sem != -1 &&
+		//is_none(wilmap::my_sneaky_tile) &&
+		wilmap::mn > 2) {
+		define_sneaky_tile();
+	}
+
 	update_unclaimed_expo();
 }
 
@@ -252,4 +259,55 @@ void ExpoFinder::check_build_wallin()
 		BWAPI::Broodwar->printf("complete wall in");
 	}
 	return;
+}
+
+void ExpoFinder::define_sneaky_tile()
+{
+	// -1 anticlockwise, +1 clockwise
+	int mmi = get_circle_number(wilmap::my_main, wilmap::grdcircle);
+	int mni = get_circle_number(wilmap::my_natu, wilmap::grdcircle);
+	int emi = get_circle_number(wilmap::main_pos[wilenemy::sem], wilmap::grdcircle);
+	int n = wilmap::grdcircle.size();
+	if (emi == -1) { return; }
+	int d1 = (mmi - emi + n) % n;
+	int d2 = (emi - mmi + n) % n;
+	if (d1 == d2) {
+		wilmap::my_sneak_direction = (mni > mmi) ? -1 : +1;
+	}
+	else {
+		wilmap::my_sneak_direction = (d1 > d2) ? -1 : +1;
+	}
+	//for (int j = 0; j < 6; j++) {
+	//	int i = (mmi + j * wilmap::my_sneak_direction + n) % n;
+	//	int x = wilmap::grdcircle[i].x / 32;
+	//	int y = wilmap::grdcircle[i].y / 32;
+	//	if (wilmap::maindistarray[wilmap::mm][y][x] > 120 &&
+	//		(is_top_(x ,y) || is_bot_(x, y) || is_rigt(x, y) || is_left(x, y))) {
+	//		wilmap::my_sneaky_tile = find_sneaky_tile(x, y);
+	//	}
+	//	if (!is_none(wilmap::my_sneaky_tile)) { return; }
+	//}
+	return;
+}
+
+BWAPI::TilePosition ExpoFinder::find_sneaky_tile(int x0, int y0)
+{
+	BWAPI::TilePosition max_tile = BWAPI::TilePositions::None;
+	int max_dist = 0;
+	int x1 = mapsafesub(x0, 12);
+	int y1 = mapsafesub(y0, 12);
+	int x2 = mapsafeadd(x0, 12, wilmap::wt) - 4;
+	int y2 = mapsafeadd(y0, 12, wilmap::ht) - 4;
+	for (int y = y1; y < y2; y++) {
+		for (int x = x1; x < x2; x++) {
+			if (check_map_area(wilmap::build_map_var, x, y, 4, 4)) {
+				int my_metric = 2 * wilmap::centerdistmap[y][x] - wilmap::maindistarray[wilmap::mm][y][x];
+				if (my_metric > max_dist) {
+					max_dist = my_metric;
+					max_tile = BWAPI::TilePosition(x, y);
+				}
+			}
+		}
+	}
+	return max_tile;
 }

@@ -498,7 +498,7 @@ void SCV::scout()
 			scout_pos = wilmap::en_natu;
 			unit->move(scout_pos);
 			willyt::need_scout_natu = false;
-			BWAPI::Broodwar->printf("quick check on  the natural");
+			//BWAPI::Broodwar->printf("quick check on the natural");
 		}
 		if (circle_increment == -1) { // initiate circling
 			circle_increment = (wilmap::entrance_circle_increment != -1) ? wilmap::entrance_circle_increment : 0;

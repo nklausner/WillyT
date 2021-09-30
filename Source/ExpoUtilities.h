@@ -22,3 +22,6 @@ void determine_my_natu();
 
 //determine circle formation of outer expansion
 void determine_expo_circle();
+
+//determine which number the expo on the given circle has
+int get_circle_number(BWAPI::Position my_pos, std::vector<BWAPI::Position>& my_vec);

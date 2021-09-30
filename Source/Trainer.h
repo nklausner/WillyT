@@ -19,6 +19,7 @@ private:
 	void train_factories();
 	void train_starports(BWAPI::Unit my_sta);
 	void train_for_rush();
+	void train_sneaky();
 	void build_addons(std::vector<BWAPI::Unit> my_vec, BWAPI::UnitType my_addon);
 	unsigned count_addon(std::vector<BWAPI::Unit> my_vec, int i);
 	unsigned count_naked(std::vector<BWAPI::Unit> my_vec, int i);
@@ -33,10 +34,12 @@ private:
 	bool can_build_goliath();
 	bool bring_it_on();
 	bool is_spooky();
+	bool is_spooky_time();
 	bool saving_for_expo();
 	bool saving_for_refinery();
 	bool saving_for_siege();
 	bool waiting_for_dropship();
+	bool saving_for_starport();
 	bool gas_is_stolen();
 
 	bool wait_workers();

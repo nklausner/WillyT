@@ -5,6 +5,7 @@
 #include "WillytBuild.h"
 #include "WillytUnits.h"
 #include "WillytEnemy.h"
+#include "ExpoUtilities.h"
 #include "MapUtilities.h"
 
 //2018-06-23: search bases for expansions
@@ -28,4 +29,6 @@ private:
 	bool allow_additional_wierd_expansion_condition();
 	void check_fast_island_expansion();
 	void check_build_wallin();
+	void define_sneaky_tile();
+	BWAPI::TilePosition find_sneaky_tile(int x0, int y0);
 };

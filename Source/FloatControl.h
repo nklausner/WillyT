@@ -17,4 +17,5 @@ private:
 	void check_relocation(BWAPI::Unit my_unit);
 	void check_relocation_wallin(BWAPI::Unit my_unit, BWAPI::TilePosition my_tile);
 	void check_open_close_wallin(BWAPI::Unit my_unit, BWAPI::TilePosition my_tile);
+	void relocate_to(BWAPI::Unit my_unit, BWAPI::TilePosition my_tile);
 };

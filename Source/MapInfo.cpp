@@ -23,6 +23,7 @@ void MapInfo::display() {
 	//display_bool(wilmap::wall_map, true, BWAPI::Colors::Red);
 	//display_bool(wilmap::maindefmap, true, BWAPI::Colors::Green);
 	//display_bool(wilmap::natudefmap, true, BWAPI::Colors::Cyan);
+	//display_bool(wilmap::thirddefmap, true, BWAPI::Colors::Cyan);
 
 	//display_start_positions();
 	display_defense_positions();
@@ -38,7 +39,7 @@ void MapInfo::display() {
 	//draw_line(wilmap::grdcircle, BWAPI::Colors::Blue);
 	//draw_line(wilmap::aircircle, BWAPI::Colors::Blue);
 	//draw_line(wilmap::flycircle, BWAPI::Colors::Blue);
-	//draw_pos_vec(wilmap::armycircle, BWAPI::Colors::Yellow);
+	//draw_tile_box_check(wilmap::my_sneaky_tile, 4, 3, BWAPI::Colors::Orange);
 
 	//display_int(wilmap::defense_map);
 	//display_int(wilmap::bunker_map, -1);
@@ -47,7 +48,7 @@ void MapInfo::display() {
 	//display_int_walkpos(wilthr::airdef, BWAPI::Colors::Orange);
 	//display_int_walkpos(wilthr::grdmap, BWAPI::Colors::Red);
 	//display_int_walkpos(wilthr::airmap, BWAPI::Colors::Red);
-	display_threats_all();
+	//display_threats_all();
 	//display_bool(wilmap::siege_map, true, BWAPI::Colors::White);
 	display_holding_bunker();
 	display_available_scans();
@@ -396,7 +397,8 @@ void MapInfo::draw_tile_box_check(BWAPI::TilePosition& tile, int dx, int dy, int
 
 void MapInfo::draw_line(std::vector<BWAPI::Position> &v, int c) {
 	for (unsigned i = 1; i < v.size(); i++) {
-		BWAPI::Broodwar->drawLineMap(v.at(i - 1), v.at(i), BWAPI::Color(c));
+		BWAPI::Broodwar->drawLineMap(v[i - 1], v[i], BWAPI::Color(c));
+		BWAPI::Broodwar->drawTextMap(v[i], "%d", i);
 	}
 	return;
 }

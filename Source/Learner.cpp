@@ -112,10 +112,11 @@ int analyze_results_random()
 
 int check_using_hardcoded()
 {
-	if (wilenemy::name == "XIAOYICOG2019") { return 3; }
-	if (wilenemy::name == "Dave Churchill" || wilenemy::name == "UAlbertaBot") { return 1; }
-	if (wilenemy::name == "Chris Coxe" || wilenemy::name == "ZZZKBot") { return 1; }
-	if (wilenemy::name == "Stardust" || wilenemy::name == "Locutus") { return 4; }
+	//if (wilenemy::name == "XIAOYICOG2019") { return 3; }
+	//if (wilenemy::name == "Dave Churchill" || wilenemy::name == "UAlbertaBot") { return 1; }
+	//if (wilenemy::name == "Chris Coxe" || wilenemy::name == "ZZZKBot") { return 1; }
+	//if (wilenemy::name == "Stardust" || wilenemy::name == "Locutus") { return 4; }
+	if (wilenemy::name == "Stardust") { return 4; }
 	return 0;
 }
 

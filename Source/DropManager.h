@@ -12,6 +12,8 @@
 //2018-08-25: initiate manager for vulture raid on expansions
 //2020-06-18: vulture raids now done via mining missions
 //			  rewrite to manage drop play: biosquads or vultures
+//2021-09-30: found bug: never actually set any fighter2 objects to raider
+//			  raiders_update() only works if already raider
 
 struct DropManager
 {
@@ -42,6 +44,7 @@ private:
 	void initiate_drop();
 	void terminate_drop();
 	bool evaluate_dropping();
+	bool abort_dropping_init();
 
 	void assign_from(std::vector<Fighter2>& my_vec, unsigned i, BWAPI::Position my_pos);
 	std::vector<Flyer>::iterator get_avaiable_dropship();

@@ -22,6 +22,12 @@ void DropManager::update()
 		}
 	}
 
+	if (state == "init" && abort_dropping_init()) {
+		terminate_drop();
+		state = "none";
+		return;
+	}
+
 	if ((state == "load" || state == "init") && load_raiders())
 	{
 		fly_to_next_expo();
@@ -89,7 +95,11 @@ void DropManager::initiate_drop()
 	raiders.clear();
 	if (willyt::strategy == 4)
 	{
-		assign_from(siegetanks, 2, my_pos);
+		if (wilunits::vultures.size() >= 4) {
+			assign_from(vultures, 4, my_pos);
+		} else {
+			assign_from(siegetanks, 2, my_pos);
+		}
 	}
 	else if (2 * willyt::sup_bio >= willyt::sup_mech)
 	{
@@ -157,9 +167,22 @@ bool DropManager::evaluate_dropping()
 		kills_pos.empty() && kills_neg.empty()) {
 		return true;
 	}
+	if (willyt::strategy == 4 &&
+		wilunits::vultures.size() >= 6 &&
+		sqdist(wilgroup::player_grd_pos, wilmap::my_natu) < 409600) {
+		return true;
+	}
 	if (BWAPI::Broodwar->self()->supplyUsed() >= 380 &&
 		BWAPI::Broodwar->self()->minerals() > 1200 &&
 		BWAPI::Broodwar->self()->gas() > 800) {
+		return true;
+	}
+	return false;
+}
+bool DropManager::abort_dropping_init()
+{
+	if (BWAPI::Broodwar->self()->supplyUsed() < 380 &&
+		sqdist(wilgroup::player_grd_pos, wilmap::my_natu) > 409600) {
 		return true;
 	}
 	return false;
@@ -173,6 +196,7 @@ void DropManager::assign_from(std::vector<Fighter2>& my_vec, unsigned i, BWAPI::
 	while (i > 0 && it != my_vec.rend()) {
 		//it->update_raider(1, my_pos, willyt::retreat_pos, dropship);
 		raiders.push_back(it->unit);
+		it->is_raider = true;
 		i--; it++;
 	}
 	return;

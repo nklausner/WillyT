@@ -4,7 +4,7 @@ void WillytAI::onStart()
 {
 	willyt::test_strategy = 0;		//zero for no testing
 	willyt::avoid_weak_strategies = true;
-	willyt::use_hardcoded_strategies = false;
+	willyt::use_hardcoded_strategies = true;
 	willyt::strategy = choose_strategy();
 	willyt::orig_strategy = willyt::strategy;
 

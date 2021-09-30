@@ -74,6 +74,11 @@ Fighter2::Fighter2(BWAPI::Unit my_unit) {
 		attack_sqdst = (int)pow(r + 32, 2);
 		break;
 	}
+	//if (unit->getType() == Terran_Vulture &&
+	//	check_sneakiness()) {
+	//	is_raider = false;
+	//	attack_pos = unit->getPosition();
+	//}
 	return;
 }
 
@@ -265,17 +270,16 @@ void Fighter2::update_raider(int my_state, BWAPI::Position& att_pos, BWAPI::Posi
 		transport = NULL;
 		break;
 	case 1: //initiate raid and load dropship
-		is_raider = true;
 		transport = my_transport;
 		force_unsiege();
 		break;
 	case 2: //set raiding waypoint
-		is_raider = true;
 		transport = NULL;
 		break;
 	default:
 		break;
 	}
+	//BWAPI::Broodwar->drawTextMap(posi, "update raider");
 	return;
 }
 void Fighter2::set_retreat() {
@@ -472,6 +476,9 @@ void Fighter2::force_unsiege()
 		unit->unsiege();
 		BWAPI::Broodwar->drawTextMap(posi, "%cLEAVE", BWAPI::Text::Red);
 	}
+}
+bool Fighter2::check_sneakiness() {
+	return (willyt::strategy == 4) ? true : false;
 }
 
 

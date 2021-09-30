@@ -49,7 +49,7 @@ void check_continuing(BWAPI::Unit u) {
 void check_repairing(BWAPI::Unit u) {
 	using namespace BWAPI::UnitTypes;
 	if (BWAPI::Broodwar->self()->minerals() > 0 &&
-		u->exists() && u->isCompleted())
+		u->exists() && u->isCompleted() && !u->isFlying())
 	{
 		if ((u->getType() == Terran_Bunker && u->getHitPoints() < 350) ||
 			(u->getType() == Terran_Missile_Turret && u->getHitPoints() < 200) ||

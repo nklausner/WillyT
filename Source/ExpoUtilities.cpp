@@ -153,6 +153,15 @@ void determine_expo_circle() {
 	return;
 }
 
+int get_circle_number(BWAPI::Position my_pos, std::vector<BWAPI::Position>& my_vec) {
+	for (unsigned i = 0; i < my_vec.size(); i++) {
+		if (sqdist(my_vec[i], my_pos) < 65536) {
+			return int(i);
+		}
+	}
+	return -1;
+}
+
 
 //BWAPI::Position my_pos = wilmap::my_main;
 //int i_max = grdcache.size();

@@ -73,10 +73,12 @@ void Trainer::train() {
 		if (my_sta) { train_starports(my_sta); }
 	}
 
-	if (!wilbuild::barracks.empty() &&
-		willyt::is_rushing) {
+	if (!wilbuild::barracks.empty() && willyt::is_rushing) {
 		train_for_rush();
 	}
+	//if (willyt::strategy == 4 && !is_none(wilmap::my_sneaky_tile)) {
+	//	train_sneaky();
+	//}
 }
 
 void Trainer::train_commandc(BWAPI::Unit my_cc) {
@@ -134,7 +136,7 @@ void Trainer::train_factories() {
 		facnaked->train(BWAPI::UnitTypes::Terran_Vulture);
 		return;
 	}
-	if (facaddon && !saving_for_siege()) {
+	if (facaddon && !saving_for_siege() && !saving_for_starport()) {
 		facaddon->train(BWAPI::UnitTypes::Terran_Siege_Tank_Tank_Mode);
 		return;
 	}
@@ -167,6 +169,18 @@ void Trainer::train_for_rush() {
 	}
 }
 
+void Trainer::train_sneaky() {
+	for (BWAPI::Unit& my_unit : wilbuild::factories) {
+		if (my_unit->getTilePosition() == wilmap::my_sneaky_tile &&
+			my_unit->isIdle() &&
+			!my_unit->isLifted() &&
+			BWAPI::Broodwar->self()->minerals() >= 1000 &&
+			BWAPI::Broodwar->self()->gas() < 1000) {
+			my_unit->train(BWAPI::UnitTypes::Terran_Vulture);
+		}
+	}
+}
+
 
 
 BWAPI::Unit Trainer::find_idle(std::vector<BWAPI::Unit> &my_list) {
@@ -185,7 +199,8 @@ BWAPI::Unit Trainer::find_idle_addon(std::vector<BWAPI::Unit> &my_list) {
 BWAPI::Unit Trainer::find_idle_naked(std::vector<BWAPI::Unit> &my_list) {
 	for (BWAPI::Unit &my_unit : my_list)
 		if (my_unit->isCompleted() && my_unit->isIdle() && !my_unit->isLifted() &&
-			my_unit->getAddon() == NULL)
+			my_unit->getAddon() == NULL &&
+			my_unit->getTilePosition() != wilmap::my_sneaky_tile)
 			return my_unit;
 	return NULL;
 }
@@ -195,13 +210,18 @@ BWAPI::Unit Trainer::find_idle_naked(std::vector<BWAPI::Unit> &my_list) {
 bool Trainer::need_a_light() {
 	int f = 4;
 	if (wilenemy::race != BWAPI::Races::Terran &&
-		wilenemy::small_percentage >= 75)
+		wilenemy::small_percentage >= 75) {
 		f = 1;
+	}
+	if (wilenemy::race == BWAPI::Races::Zerg &&
+		willyt::my_time < 600 && wilenemy::has_lair) {
+		f = 6; //incoming mutalisks or lurkers
+	}
 	if (f * wilunits::tcount_firebat < wilunits::tcount_marine &&
-		willyt::strategy != 6)
+		willyt::strategy != 6) {
 		return true;
-	else
-		return false;
+	}
+	return false;
 }
 bool Trainer::need_rines() {
 	if (willyt::rush_alert)
@@ -256,26 +276,31 @@ bool Trainer::bring_it_on() {
 		wilunits::vultures.size() < 2) {
 		return true;
 	}
-	//if (willyt::strategy == 4) {
-		//if (willyt::my_time < 600 &&
-		//	!wilbuild::machineshops.empty() &&
-		//	wilunits::siegetanks.size() >= 2 &&
-		//	wilunits::vultures.size() < 2) {
-		//	return true;
-		//}
-		//if (willyt::sup_bio + willyt::sup_mech >= willyt::attack_supply &&
-		//	2 * wilunits::vultures.size() < wilunits::siegetanks.size() &&
-		//	BWAPI::Broodwar->self()->minerals() >= BWAPI::Broodwar->self()->gas() * 2) {
-		//	return true;
-		//}
-	//}		
+	if (willyt::strategy == 4 &&
+		wilbuild::factories.size() >= 3 &&
+		wilbuild::factories.back()->isCompleted() &&
+		wilunits::vultures.size() < 6 &&
+		BWAPI::Broodwar->self()->minerals() >= 1500 &&
+		BWAPI::Broodwar->self()->gas() < 1000) {
+		return true;
+	}	
 	return false;
 }
 bool Trainer::is_spooky() {
 	if (wilbuild::covertops.size() > 0 &&
 		wilbuild::covertops.front()->isCompleted() &&
-		200 + (int)(200 * wilunits::ghosts.size()) < BWAPI::Broodwar->self()->gas())
+		(BWAPI::Broodwar->self()->gas() > BWAPI::Broodwar->self()->minerals() ||
+		is_spooky_time())) {
 		return true;
+	}
+	return false;
+}
+bool Trainer::is_spooky_time() {
+	if (wilenemy::race != BWAPI::Races::Zerg &&
+		wilenemy::air_percentage >= 50 &&
+		BWAPI::Broodwar->self()->gas() > 200 * (int)wilunits::ghosts.size() + 200) {
+		return true;
+	}
 	return false;
 }
 
@@ -323,6 +348,15 @@ bool Trainer::waiting_for_dropship() {
 		return true;
 	return false;
 }
+bool Trainer::saving_for_starport() {
+	if (willyt::strategy == 4 &&
+		wilbuild::starports.empty() &&
+		willyt::my_time > 450 &&
+		BWAPI::Broodwar->self()->gas() < 200) {
+		return true;
+	}
+	return false;
+}
 bool Trainer::gas_is_stolen() {
 	for (Resource& r : wilbuild::geysers) {
 		if (r.is_owned &&
@@ -342,7 +376,8 @@ void Trainer::build_addons(std::vector<BWAPI::Unit> my_vec, BWAPI::UnitType my_a
 		if (my_unit->isCompleted() &&
 			my_unit->isIdle() &&
 			!my_unit->getAddon() &&
-			my_unit->canBuildAddon()) {
+			my_unit->canBuildAddon() &&
+			my_unit->getTilePosition() != wilmap::my_sneaky_tile) {
 			my_unit->buildAddon(my_addon);
 			return;
 		}

@@ -21,6 +21,7 @@ void MapAnalysis::init_advanced() {
 	create_choke_map();
 	create_defense_maps();
 	create_rush_defense();
+	create_third_defense_map();
 	return;
 }
 
@@ -705,6 +706,40 @@ void MapAnalysis::create_rush_defense() {
 		BWAPI::Position p1 = linear_interpol_abs(main_pos[i], center_pos, 128);
 		BWAPI::Position p2 = linear_interpol_abs(main_pos[i], natu_pos[i], 128);
 		rush_def_tile[i] = BWAPI::TilePosition( (p1.x + p2.x) / 64 - 1 , (p1.y + p2.y) / 64 - 1 );
+	}
+	return;
+}
+void MapAnalysis::create_third_defense_map() {
+	//find expansions that are close enough to be sieged from the main
+	using namespace wilmap;
+	clear_map_bool(thirddefmap);
+	my_thirddefvec.clear();
+	for (int i = 0; i < mn; i++) {
+		for (Expo &expo : wilexpo::all) {
+			if (sqdist(main_tiles[i], expo.tile) < 2000 &&
+				maindistarray[i][expo.tile.y][expo.tile.x] > 100) {
+				fill_third_defense_map(i, expo.tile.x, expo.tile.y);
+			}
+		}
+	}
+	return;
+}
+void MapAnalysis::fill_third_defense_map(int i, int x0, int y0) {
+	x0++;
+	y0++;
+	int x1 = mapsafesub(x0, 11);
+	int y1 = mapsafesub(y0, 11);
+	int x2 = mapsafeadd(x0, 13, wilmap::wt);
+	int y2 = mapsafeadd(y0, 12, wilmap::ht);
+	for (int y = y1; y < y2; y++) {
+		for (int x = x1; x < x2; x++) {
+			if (wilmap::maindistarray[i][y][x] > 0 &&
+				wilmap::maindistarray[i][y][x] < 60 &&
+				sqdist(x0, y0, x, y) < 200) {
+				wilmap::thirddefmap[y][x] = true;
+				wilmap::my_thirddefvec.push_back(BWAPI::TilePosition(x, y));
+			}
+		}
 	}
 	return;
 }

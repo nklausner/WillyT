@@ -51,6 +51,7 @@ private:
 	void set_retreat();
 	void check_cohesion_retreat();
 	void force_unsiege();
+	bool check_sneakiness();
 
 	//booleans
 
@@ -92,5 +93,6 @@ private:
 	//transport
 
 	BWAPI::Unit transport;
+
 
 };

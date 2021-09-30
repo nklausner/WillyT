@@ -134,6 +134,7 @@ void Upgrader::upgrade_mech() {
 		return;
 	}
 	if (BWAPI::Broodwar->self()->hasResearched(Spider_Mines) == NULL &&
+		willyt::strategy != 4 &&
 		willyt::siege_started &&
 		wilunits::tcount_vulture >= 2 &&
 		my_machine_shop &&
@@ -142,6 +143,7 @@ void Upgrader::upgrade_mech() {
 		return;
 	}
 	if (BWAPI::Broodwar->self()->getUpgradeLevel(Ion_Thrusters) == 0 &&
+		willyt::strategy != 4 &&
 		willyt::siege_started &&
 		wilunits::tcount_vulture >= 3 &&
 		my_machine_shop &&

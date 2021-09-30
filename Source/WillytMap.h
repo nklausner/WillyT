@@ -50,8 +50,10 @@ namespace wilmap
 
 	extern bool maindefmap[256][256];
 	extern bool natudefmap[256][256];
+	extern bool thirddefmap[256][256];
 	extern std::vector<BWAPI::TilePosition> my_maindefvec;
 	extern std::vector<BWAPI::TilePosition> my_natudefvec;
+	extern std::vector<BWAPI::TilePosition> my_thirddefvec;
 
 	//player special locations
 
@@ -115,9 +117,10 @@ namespace wilmap
 	extern std::vector<BWAPI::Position> aircircle;
 	extern std::vector<BWAPI::Position> flycircle;
 
-	//army positions
+	//sneaky stuff
 
-	extern std::vector<BWAPI::Position> armycircle;
+	extern BWAPI::TilePosition my_sneaky_tile;
+	extern int my_sneak_direction;
 
 	//circles with increments
 

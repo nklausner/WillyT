@@ -36,8 +36,10 @@ namespace wilmap
 
 	bool maindefmap[256][256];
 	bool natudefmap[256][256];
+	bool thirddefmap[256][256];
 	std::vector<BWAPI::TilePosition> my_maindefvec;
 	std::vector<BWAPI::TilePosition> my_natudefvec;
+	std::vector<BWAPI::TilePosition> my_thirddefvec;
 
 	BWAPI::TilePosition my_start = BWAPI::TilePositions::None;
 	BWAPI::Position my_main = BWAPI::Positions::None;
@@ -84,7 +86,9 @@ namespace wilmap
 	std::vector<BWAPI::Position> grdcircle;
 	std::vector<BWAPI::Position> aircircle;
 	std::vector<BWAPI::Position> flycircle;
-	std::vector<BWAPI::Position> armycircle;
+
+	BWAPI::TilePosition my_sneaky_tile = BWAPI::TilePositions::None;
+	int my_sneak_direction = 0;
 
 	int cdx8[8] = { +1,+1,+0,-1,-1,-1,+0,+1 };
 	int cdy8[8] = { +0,+1,+1,+1,+0,-1,-1,-1 };
