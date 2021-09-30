@@ -14,6 +14,7 @@ namespace wilplanner
 		clear_map_bool(wilmap::main_map);
 		fill_main_map(x0 - 1, y0 - 1);
 		fill_mining_space(x0, y0);
+		copy_array(wilmap::main_map, wilmap::main_map_orig);
 		fill_center_roundabout(x0, y0);
 		fill_main_corridors();
 

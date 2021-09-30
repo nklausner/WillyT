@@ -10,7 +10,7 @@ void MapInfo::display() {
 	//display_space_colors();
 
 	//display_int(wilmap::centerdistmap, 0);
-	//display_bool(wilmap::main_map, true, BWAPI::Colors::Red);
+	//display_bool(wilmap::main_map_orig, true, BWAPI::Colors::Red);
 	//display_bool(wilmap::choke_map, true, BWAPI::Colors::Orange);
 	//display_int(wilmap::mainpathmap, 0);
 	//display_int(wilmap::space_map, 0);

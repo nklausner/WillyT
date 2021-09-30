@@ -639,6 +639,7 @@ void MapAnalysis::create_defense_maps() {
 		if (i == mm) {
 			create_defense_area(main_choke_pos[i], maindistarray[i], maindefmap, my_maindefvec);
 			create_defense_area(natu_choke_pos[i], maindistarray[i], natudefmap, my_natudefvec);
+			select_highground_defense();
 		} else {
 			std::vector<BWAPI::TilePosition> my_vec;
 			create_defense_area(main_choke_pos[i], maindistarray[i], maindefmap, my_vec);
@@ -679,6 +680,15 @@ void MapAnalysis::create_defense_area(BWAPI::Position mychokepos, int(&mydistmap
 				mydefmap[y][x] = true;
 				mydefvec.push_back(BWAPI::TilePosition(x, y));
 			}
+		}
+	}
+	return;
+}
+void MapAnalysis::select_highground_defense() {
+	for (BWAPI::TilePosition tile : wilmap::my_natudefvec) {
+		if (wilmap::main_map_orig[tile.y][tile.x] &&
+			wilmap::build_map_var[tile.y][tile.x]) {
+			wilmap::my_highdefvec.push_back(tile);
 		}
 	}
 	return;

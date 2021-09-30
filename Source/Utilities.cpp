@@ -171,3 +171,14 @@ BWAPI::Unit get_in_range(std::vector<BWAPI::Unit> &v, BWAPI::Position &p, int sq
 	}
 	return NULL;
 }
+
+
+
+void copy_array(bool(&my_src)[256][256], bool(&my_dest)[256][256]) {
+	for (unsigned y = 0; y < 256; y++) {
+		for (unsigned x = 0; x < 256; x++) {
+			my_dest[y][x] = my_src[y][x];
+		}
+	}
+	return;
+}

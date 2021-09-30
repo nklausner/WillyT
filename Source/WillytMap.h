@@ -31,6 +31,7 @@ namespace wilmap
 	extern int mainpathmap[256][256];
 	extern bool choke_map[256][256];
 	extern bool main_map[256][256];
+	extern bool main_map_orig[256][256];
 
 	extern bool walkmap[1024][1024];
 	extern bool walkmapfixed[1024][1024];
@@ -53,6 +54,7 @@ namespace wilmap
 	extern bool thirddefmap[256][256];
 	extern std::vector<BWAPI::TilePosition> my_maindefvec;
 	extern std::vector<BWAPI::TilePosition> my_natudefvec;
+	extern std::vector<BWAPI::TilePosition> my_highdefvec;
 	extern std::vector<BWAPI::TilePosition> my_thirddefvec;
 
 	//player special locations

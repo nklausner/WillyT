@@ -72,3 +72,6 @@ BWAPI::Unit get_closest(std::vector<BWAPI::Unit> &v, BWAPI::TilePosition &t);
 BWAPI::Unit get_in_range(std::vector<BWAPI::Unit> &v, BWAPI::TilePosition &t, int sqr);
 //get first unit of a vector within sqaure distance to position
 BWAPI::Unit get_in_range(std::vector<BWAPI::Unit> &v, BWAPI::Position &p, int sqd);
+
+//copy array 256
+void copy_array(bool(&my_src)[256][256], bool(&my_dest)[256][256]);

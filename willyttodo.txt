@@ -122,6 +122,6 @@ crash frame hunt: 37126, 28028, 33929, 13603, 10403, 40888, 18492, 31660 "ondisc
 - get running: basil-ladder/sc-docker (DONE) (thx to hao pan)
 - run tests: UAB, DaQin, McRaveZ, FreshMeat, Steamhammer, Microwave, Stardust, maybe dragon ... (DONE)
 - 2hatch_muta reaction (scout DONE)
-- turret building
+- turret building (at least found an "add scvs to gas endlessly" bug)
 - TvT improvements (floating buildings ...)
 - improve strat 2: +rax(TvP), marine_range, dont run out (DONE)

@@ -157,7 +157,7 @@ bool DropManager::evaluate_dropping()
 	if (willyt::strategy != 4 &&
 		willyt::sup_bio + willyt::sup_mech >= 32 &&
 		willyt::count_trapped == 0 &&
-		sqdist(wilgroup::player_grd_pos, wilmap::my_natu) < 409600 &&
+		main_army_at_home() &&
 		!should_avoid_drops()) {
 		return true;
 	}
@@ -169,7 +169,7 @@ bool DropManager::evaluate_dropping()
 	}
 	if (willyt::strategy == 4 &&
 		wilunits::vultures.size() >= 6 &&
-		sqdist(wilgroup::player_grd_pos, wilmap::my_natu) < 409600) {
+		main_army_at_home()) {
 		return true;
 	}
 	if (BWAPI::Broodwar->self()->supplyUsed() >= 380 &&
@@ -182,10 +182,14 @@ bool DropManager::evaluate_dropping()
 bool DropManager::abort_dropping_init()
 {
 	if (BWAPI::Broodwar->self()->supplyUsed() < 380 &&
-		sqdist(wilgroup::player_grd_pos, wilmap::my_natu) > 409600) {
+		!main_army_at_home()) {
 		return true;
 	}
 	return false;
+}
+bool DropManager::main_army_at_home()
+{
+	return (sqdist(wilgroup::player_grd_pos, wilmap::my_natu) < 409600) ? true : false;
 }
 
 
@@ -278,6 +282,9 @@ int DropManager::choose_direction()
 		if (kills_neg.back() >= kills_pos.back()) { return -1; }
 	}
 	//if (willyt::go_islands) {}
+	if (wilmap::my_sneak_direction != 0) {
+		return wilmap::my_sneak_direction;
+	}
 	return choose_direction_random();
 }
 int DropManager::choose_direction_random()
@@ -354,6 +361,14 @@ bool DropManager::enemy_buildings_near(BWAPI::Position my_pos)
 			if (u->getType().isBuilding() &&
 				sqdist(u->getPosition(), my_pos) < 65536)
 				return true;
+	return false;
+}
+bool DropManager::should_unload_outside(BWAPI::Position my_pos)
+{
+	if (willyt::strategy == 4 && raiders.size() == 4 &&
+		wilmap::maindistarray[wilmap::mm][my_pos.y / 32][my_pos.x / 32] > 120) {
+		return true;
+	}
 	return false;
 }
 BWAPI::Position DropManager::find_save_location(BWAPI::TilePosition td, BWAPI::TilePosition tn)

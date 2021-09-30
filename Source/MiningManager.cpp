@@ -64,7 +64,8 @@ void MiningManager::append_gas_miner()
 			if (geys->getType().isRefinery() &&
 				geys->isCompleted() &&
 				geys->getPlayer() == BWAPI::Broodwar->self() &&
-				geys->isBeingGathered() == false)
+				geys->isBeingGathered() == false &&
+				expo.gas_miner_count < 3 * expo.geysers.size())
 			{
 				for (SCV& scv : wilunits::scvs) {
 					if (scv.expo_pos == expo.posi &&

@@ -14,12 +14,13 @@ BWAPI::Position get_retreat_vector(BWAPI::Position p0, BWAPI::Position pe, int d
 BWAPI::Unit get_target_from(std::vector<BWAPI::Unit>& v, BWAPI::Unit u, BWAPI::Position p, int r);
 BWAPI::Unit get_maximum_target(std::vector<BWAPI::Unit>& v, BWAPI::TilePosition t, int r);
 
-BWAPI::Position get_random_pos(std::vector<BWAPI::TilePosition>& my_vec);
 BWAPI::Position get_mine_position();
 BWAPI::Position get_current_target_position(BWAPI::Unit u);
 
-BWAPI::Position choose_defense_siegetile();
 bool check_defense_siegetile(BWAPI::TilePosition t);
+BWAPI::Position choose_defense_siegetile();
+BWAPI::Position get_random_pos(std::vector<BWAPI::TilePosition>& my_vec);
+BWAPI::Position get_natural_defense_pos();
 
 bool check_venture_out(BWAPI::Position my_pos);
 

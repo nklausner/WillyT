@@ -21,6 +21,7 @@ namespace wilmap
 	int mainpathmap[256][256];
 	bool choke_map[256][256];
 	bool main_map[256][256];
+	bool main_map_orig[256][256];
 
 	bool walkmap[1024][1024];
 	bool walkmapfixed[1024][1024];
@@ -39,6 +40,7 @@ namespace wilmap
 	bool thirddefmap[256][256];
 	std::vector<BWAPI::TilePosition> my_maindefvec;
 	std::vector<BWAPI::TilePosition> my_natudefvec;
+	std::vector<BWAPI::TilePosition> my_highdefvec;
 	std::vector<BWAPI::TilePosition> my_thirddefvec;
 
 	BWAPI::TilePosition my_start = BWAPI::TilePositions::None;

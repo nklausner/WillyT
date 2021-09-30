@@ -35,6 +35,7 @@ void ExpoFinder::check() {
 	}
 
 	update_unclaimed_expo();
+	count_highground_defense();
 }
 
 void ExpoFinder::check_additional_expansion()
@@ -256,7 +257,7 @@ void ExpoFinder::check_build_wallin()
 		check_map_area(wilmap::build_map_var, my_tile.x, my_tile.y, 3, 2))
 	{
 		build(BWAPI::UnitTypes::Terran_Supply_Depot, my_tile);
-		BWAPI::Broodwar->printf("complete wall in");
+		//BWAPI::Broodwar->printf("complete wall in");
 	}
 	return;
 }
@@ -310,4 +311,19 @@ BWAPI::TilePosition ExpoFinder::find_sneaky_tile(int x0, int y0)
 		}
 	}
 	return max_tile;
+}
+
+void ExpoFinder::count_highground_defense()
+{
+	willyt::highground_defense_tanks = 0;
+	willyt::planned_highground_defense = 0;
+
+	for (Fighter2& tank : wilunits::siegetanks) {
+		if (wilmap::main_map_orig[tank.unit->getTilePosition().y][tank.unit->getTilePosition().x] &&
+			wilmap::natudefmap[tank.unit->getTilePosition().y][tank.unit->getTilePosition().x]) {
+			willyt::highground_defense_tanks++;
+		}
+	}
+	//BWAPI::Broodwar->printf("highground natu def: %d tanks", willyt::highground_defense_tanks);
+	return;
 }

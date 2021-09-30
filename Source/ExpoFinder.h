@@ -31,4 +31,5 @@ private:
 	void check_build_wallin();
 	void define_sneaky_tile();
 	BWAPI::TilePosition find_sneaky_tile(int x0, int y0);
+	void count_highground_defense();
 };

@@ -45,6 +45,7 @@ private:
 	void terminate_drop();
 	bool evaluate_dropping();
 	bool abort_dropping_init();
+	bool main_army_at_home();
 
 	void assign_from(std::vector<Fighter2>& my_vec, unsigned i, BWAPI::Position my_pos);
 	std::vector<Flyer>::iterator get_avaiable_dropship();
@@ -64,6 +65,7 @@ private:
 	bool raid_this_base(BWAPI::Position my_pos);
 	bool enemy_workers_near(BWAPI::Position my_pos);
 	bool enemy_buildings_near(BWAPI::Position my_pos);
+	bool should_unload_outside(BWAPI::Position my_pos);
 	BWAPI::Position find_save_location(BWAPI::TilePosition td, BWAPI::TilePosition tn);
 
 

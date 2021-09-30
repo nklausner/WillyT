@@ -72,6 +72,8 @@ namespace willyt
 	std::vector<BWAPI::Unit> target_vector;
 
 	int count_trapped = 0;
+	unsigned highground_defense_tanks = 0;
+	unsigned planned_highground_defense = 0;
 }
 
 

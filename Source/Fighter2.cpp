@@ -415,7 +415,7 @@ void Fighter2::check_siege() {
 				special_queue = 32;
 			}
 		}
-		BWAPI::Broodwar->drawTextMap(posi, "%cDEF", BWAPI::Text::Green);
+		//BWAPI::Broodwar->drawTextMap(posi, "%cDEF", BWAPI::Text::Green);
 	}
 
 	//change state case, clear special position
@@ -424,7 +424,7 @@ void Fighter2::check_siege() {
 		if (special_pos != BWAPI::Positions::None &&
 			(!willyt::is_choke_def || !check_defense_siegetile(tile))) {
 			special_pos = BWAPI::Positions::None;
-			BWAPI::Broodwar->drawTextMap(posi, "%cLEAVE", BWAPI::Text::Red);
+			//BWAPI::Broodwar->drawTextMap(posi, "%cLEAVE", BWAPI::Text::Red);
 		}
 	}
 	//BWAPI::Broodwar->drawTextMap(posi, "%d", special_queue);

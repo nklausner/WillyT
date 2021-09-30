@@ -47,18 +47,6 @@ BWAPI::Unit get_maximum_target(std::vector<BWAPI::Unit>& v, BWAPI::TilePosition 
 
 
 
-BWAPI::Position get_random_pos(std::vector<BWAPI::TilePosition>& my_vec) {
-	if (!my_vec.empty()) {
-		int i = rand() % my_vec.size();
-		BWAPI::TilePosition t = my_vec[i];
-		if (!is_none(t) &&
-			wilmap::build_map_var[t.y][t.x] &&
-			BWAPI::Broodwar->getUnitsOnTile(t).empty()) {
-			return BWAPI::Position(32 * t.x + 16, 32 * t.y + 16);
-		}
-	}
-	return BWAPI::Positions::None;
-}
 BWAPI::Position get_mine_position() {
 	int x = 0;
 	int y = 0;
@@ -97,16 +85,37 @@ BWAPI::Position get_current_target_position(BWAPI::Unit u) {
 
 
 
-BWAPI::Position choose_defense_siegetile() {
-	if (willyt::strategy == 4 && willyt::my_time > 600) { return get_random_pos(wilmap::my_natudefvec); }
-	if (!willyt::has_natural) { return get_random_pos(wilmap::my_maindefvec); }
-	if (willyt::has_natural) { return get_random_pos(wilmap::my_natudefvec); }
-	return BWAPI::Positions::None;
-}
 bool check_defense_siegetile(BWAPI::TilePosition t) {
 	if (!willyt::has_natural && wilmap::maindefmap[t.y][t.x]) { return true; }
 	if (willyt::has_natural && wilmap::natudefmap[t.y][t.x]) { return true; }
 	return false;
+}
+BWAPI::Position choose_defense_siegetile() {
+	if (willyt::strategy == 4 && willyt::my_time > 600) { return get_natural_defense_pos(); }
+	if (willyt::has_natural) { return get_natural_defense_pos(); }
+	if (!willyt::has_natural) { return get_random_pos(wilmap::my_maindefvec); }
+	return BWAPI::Positions::None;
+}
+BWAPI::Position get_random_pos(std::vector<BWAPI::TilePosition>& my_vec) {
+	if (!my_vec.empty()) {
+		int i = rand() % my_vec.size();
+		BWAPI::TilePosition t = my_vec[i];
+		if (!is_none(t) &&
+			wilmap::build_map_var[t.y][t.x] &&
+			BWAPI::Broodwar->getUnitsOnTile(t).empty()) {
+			return BWAPI::Position(32 * t.x + 16, 32 * t.y + 16);
+		}
+	}
+	return BWAPI::Positions::None;
+}
+BWAPI::Position get_natural_defense_pos() {
+	if (willyt::highground_defense_tanks + willyt::planned_highground_defense < 4 &&
+		wilmap::my_highdefvec.size() > 3)
+	{
+		willyt::planned_highground_defense++;
+		return get_random_pos(wilmap::my_highdefvec);
+	}
+	return get_random_pos(wilmap::my_natudefvec);
 }
 
 

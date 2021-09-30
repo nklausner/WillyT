@@ -83,6 +83,7 @@ private:
 
 	void create_defense_maps();
 	void create_defense_area(BWAPI::Position mychokepos, int(&mydistmap)[256][256], bool(&mydefmap)[256][256], std::vector<BWAPI::TilePosition>& mydefvec);
+	void select_highground_defense();
 	int find_alternative_choke_tile_dist(int xc, int yc, int(&mydistmap)[256][256]);
 	void create_rush_defense();
 	void create_third_defense_map();

@@ -88,6 +88,8 @@ namespace willyt
 
 	//special counts
 	extern int count_trapped;
+	extern unsigned highground_defense_tanks;
+	extern unsigned planned_highground_defense;
 
 }
 
