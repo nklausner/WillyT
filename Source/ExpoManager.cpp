@@ -277,7 +277,8 @@ void ExpoManager::set_resource_owned(std::vector<Resource>& my_vec, int id, bool
 	return;
 }
 
-void ExpoManager::remove_resource(std::vector<Resource>& my_vec, BWAPI::Unit my_unit) {
+void ExpoManager::remove_resource(std::vector<Resource>& my_vec, BWAPI::Unit my_unit)
+{
 	for (std::size_t i = 0; i < my_vec.size(); ++i) {
 		if (my_vec[i].unit == my_unit) {
 			my_vec.erase(my_vec.begin() + i);

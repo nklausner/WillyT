@@ -20,6 +20,7 @@ bool check_proxy_prod_buildings();
 bool check_pressure_on_bunker();
 
 void check_mega_macro();
+void check_abort_rushing();
 void check_carrier_rush();
 void check_scout_natu();
 

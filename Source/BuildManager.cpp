@@ -75,7 +75,7 @@ void BuildManager::build() {
 	}
 
 	if (my_tile == BWAPI::TilePositions::None) {
-		my_tile = buildgenerator.generate_random_tile(my_type, wilmap::my_start, 1);
+		my_tile = buildgenerator.generate_random_tile(my_type, wilmap::my_main_tile, 1);
 	}
 	if (my_tile != BWAPI::TilePositions::None) {
 		auto it = choose_scv(my_tile);

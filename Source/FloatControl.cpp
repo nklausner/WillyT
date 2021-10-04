@@ -1,10 +1,14 @@
 #include "FloatControl.h"
 
-void FloatControl::update()
+void FloatControl::update(ExpoManager& expomanager)
 {
 	if (willyt::cannon_rush_alert) {
 		for (BWAPI::Unit b : wilbuild::barracks) {
 			check_relocation(b);
+		}
+		for (BWAPI::Unit u : wilbuild::commandcenters) {
+			check_lift_base_when_cannon_rushed(u, expomanager);
+			check_land_base_when_cannon_rushed(u, expomanager);
 		}
 	}
 	if ((willyt::strategy == 3 || willyt::strategy == 4))
@@ -126,5 +130,45 @@ void FloatControl::relocate_to(BWAPI::Unit my_unit, BWAPI::TilePosition my_tile)
 		}
 	}
 	//BWAPI::Broodwar->printf("%d, %d", my_tile.x, my_tile.y);
+	return;
+}
+
+
+
+void FloatControl::check_lift_base_when_cannon_rushed(BWAPI::Unit u, ExpoManager& expomanager)
+{
+	if (u->isCompleted() && u->canLift() &&
+		check_map_area(wilthr::grddef, u->getTilePosition().x, u->getTilePosition().y, 4, 3, 4) == false)
+	{
+		wilbuild::lift(u);
+		expomanager.desert_expo(u->getTilePosition());
+	}
+	return;
+}
+void FloatControl::check_land_base_when_cannon_rushed(BWAPI::Unit u, ExpoManager& expomanager)
+{
+	if (u->isLifted() && sqdist(u->getPosition(), wilmap::my_main_def) > 4096 &&
+		check_map_area(wilthr::grddef, wilmap::my_natu_tile.x, wilmap::my_natu_tile.y, 4, 3, 4) == false)
+	{
+		u->move(wilmap::my_main_def);
+	}
+	if (u->isLifted() &&
+		check_map_area(wilthr::grddef, wilmap::my_natu_tile.x, wilmap::my_natu_tile.y, 4, 3, 4))
+	{
+		if (sqdist(u->getPosition(), wilmap::my_natu) > 4096) {
+			u->move(wilmap::my_natu);
+		}
+		else
+		if (u->canLand(wilmap::my_natu_tile) &&
+			u->getOrder() != BWAPI::Orders::BuildingLand) {
+			wilbuild::land(u, wilmap::my_natu_tile);
+			need_occupying = true;
+		}
+	}
+	if (need_occupying && u->getTilePosition() == wilmap::my_natu_tile)
+	{
+		expomanager.occupy_expo(u);
+		need_occupying = false;
+	}
 	return;
 }

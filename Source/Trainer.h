@@ -4,6 +4,8 @@
 #include "WillytBuild.h"
 #include "WillytUnits.h"
 #include "WillytEnemy.h"
+#include "WillyThreat.h"
+#include "MapUtilities.h"
 
 //2018-03-17: outsource unit training
 
@@ -43,6 +45,7 @@ private:
 	bool gas_is_stolen();
 
 	bool wait_workers();
+	bool is_under_threat_static_def(BWAPI::Unit u);
 
 	int scv_rax_count;
 	int scv_fe_count;

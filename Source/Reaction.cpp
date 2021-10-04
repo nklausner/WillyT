@@ -8,6 +8,7 @@ void check_all_reactions() {
 	willyt::proxy_prod_alert = check_proxy_prod_buildings();
 	willyt::hold_bunker = check_pressure_on_bunker();
 	check_mega_macro();
+	check_abort_rushing();
 	check_carrier_rush();
 	check_scout_natu();
 	change_strategies();
@@ -129,6 +130,21 @@ void check_mega_macro() {
 		wilenemy::goes_megamacro = false;
 		willyt::is_rushing = false;
 		BWAPI::Broodwar->printf("reject enemy strategy: MEGA-MACRO");
+	}
+	return;
+}
+
+void check_abort_rushing() {
+	if (willyt::is_rushing) {
+		if (willyt::my_time > 600 ||
+			wilenemy::supply_cloak >= 4) {
+			willyt::is_rushing = false;
+		}
+ 	}
+	if (willyt::cannon_rush_alert &&
+		willyt::my_time > 600 &&
+		wilunits::tcount_siegetank > 4) {
+		willyt::cannon_rush_alert = false;
 	}
 	return;
 }

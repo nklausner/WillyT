@@ -185,7 +185,8 @@ void Trainer::train_sneaky() {
 
 BWAPI::Unit Trainer::find_idle(std::vector<BWAPI::Unit> &my_list) {
 	for (std::vector<BWAPI::Unit>::reverse_iterator rit = my_list.rbegin(); rit != my_list.rend(); ++rit)
-		if ((*rit)->isCompleted() && (*rit)->isIdle() && !(*rit)->isLifted())
+		if ((*rit)->isCompleted() && (*rit)->isIdle() && !(*rit)->isLifted() &&
+			!is_under_threat_static_def(*rit))
 			return (*rit);
 	return NULL;
 }
@@ -418,6 +419,14 @@ bool Trainer::wait_workers() {
 	if (wilbuild::commandcenters.size() < 2 && wilunits::tcount_scv >= scv_fe_count &&
 		willyt::fast_expand &&
 		BWAPI::Broodwar->self()->minerals() < 450) {
+		return true;
+	}
+	return false;
+}
+bool Trainer::is_under_threat_static_def(BWAPI::Unit u) {
+	if (willyt::cannon_rush_alert &&
+		check_map_area(wilthr::grddef, u->getTilePosition().x, u->getTilePosition().y, u->getType().tileWidth(), u->getType().tileHeight(), 4) == false) {
+		BWAPI::Broodwar->printf("under threat static defense");
 		return true;
 	}
 	return false;

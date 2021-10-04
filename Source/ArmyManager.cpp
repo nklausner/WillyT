@@ -63,7 +63,7 @@ bool ArmyManager::decide_attack(int n) {
 }
 
 BWAPI::Position ArmyManager::get_gathering_position() {
-	if (willyt::is_rushing && willyt::my_time < 450) {
+	if (willyt::is_rushing) {
 		if (wilenemy::goes_megamacro) {
 			return wilmap::natu_def_pos[wilenemy::sem];
 		} else {
@@ -91,6 +91,7 @@ BWAPI::Position ArmyManager::get_defending_target_position(std::vector<BWAPI::Un
 		BWAPI::Position p = estimate_next_pos(my_enemy, 24);
 		if (!willyt::is_rushing) { return p; }
 		if (can_attack_safe_r4(p)) { return p; }
+		if (!wilunits::siegetanks.empty()) { return p; }
 	}
 	return BWAPI::Positions::None;
 }

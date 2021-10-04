@@ -41,15 +41,15 @@ void MapAnalysis::set_map_dimension() {
 }
 void MapAnalysis::set_start_locations() {
 	using namespace wilmap;
-	my_start = BWAPI::Broodwar->self()->getStartLocation();
-	my_main = BWAPI::Position{ 32 * my_start.x + 64, 32 * my_start.y + 48 };
+	my_main_tile = BWAPI::Broodwar->self()->getStartLocation();
+	my_main = BWAPI::Position{ 32 * my_main_tile.x + 64, 32 * my_main_tile.y + 48 };
 	unscouted.clear();
 	int i = 0;
 	for (BWAPI::TilePosition t : BWAPI::Broodwar->getStartLocations()) {
 		main_tiles[i] = BWAPI::TilePosition(t.x + 1, t.y + 1);
 		main_pos[i] = BWAPI::Position{ 32 * t.x + 64, 32 * t.y + 48 };
-		if (my_start.x == t.x &&
-			my_start.y == t.y) {
+		if (my_main_tile.x == t.x &&
+			my_main_tile.y == t.y) {
 			mm = i;
 		} else {
 			unscouted.push_back(BWAPI::Position{ 32 * t.x + 64, 32 * t.y + 48 });

@@ -125,3 +125,6 @@ crash frame hunt: 37126, 28028, 33929, 13603, 10403, 40888, 18492, 31660 "ondisc
 - turret building (at least found an "add scvs to gas endlessly" bug)
 - TvT improvements (floating buildings ...)
 - improve strat 2: +rax(TvP), marine_range, dont run out (DONE)
+
+20211004:
+- floating CCs when cannon rushed and similar (DONE)

@@ -91,7 +91,7 @@ void WillytAI::onFrame()
 		bunkermanager.update();		//load'n'unload
 		armymanager.update();		//find targets for defense, attack (given supply)
 		dropmanager.update();
-		floatcontrol.update();
+		floatcontrol.update(expomanager);
 		threatmngr.ignore_stray_lurkers(willyt::available_scans);
 		unitmanager.update_eight();	//check scvs being stuck
 	}
@@ -159,6 +159,13 @@ void WillytAI::onUnitCreate(BWAPI::Unit unit)
 		}
 		if (unit->getType() == BWAPI::UnitTypes::Terran_Command_Center) {
 			expomanager.occupy_expo(unit);
+		}
+	}
+	if (unit->getPlayer()->isEnemy(BWAPI::Broodwar->self())) {
+		enemymanager.append_unit(unit);
+
+		if (unit->getType().isResourceDepot()) {
+			expomanager.set_enemy_expo(unit->getTilePosition(), true);
 		}
 	}
 	if (unit->getType() == BWAPI::UnitTypes::Resource_Vespene_Geyser) {

@@ -61,7 +61,7 @@ void ExpoFinder::check_additional_expansion()
 		}
 		my_tile = my_expo.tile;
 		my_dist = get_ground_dist(my_tile);
-		if (my_dist < 0) { my_dist = my_tile.getApproxDistance(wilmap::my_start); }
+		if (my_dist < 0) { my_dist = my_tile.getApproxDistance(wilmap::my_main_tile); }
 		my_dist = my_dist - 2 * my_tile.getApproxDistance(enemy_center);
 
 		if (min_dist > my_dist) {
@@ -221,6 +221,10 @@ bool ExpoFinder::allow_additional_wierd_expansion_condition()
 		willyt::sup_bio + willyt::sup_mech < willyt::attack_supply) {
 		return false;
 	}
+	if (willyt::cannon_rush_alert &&
+		willyt::my_time < 600) {
+		return false;
+	}
 	return true;
 }
 
@@ -235,7 +239,7 @@ void ExpoFinder::check_fast_island_expansion()
 			if (expo.is_island &&
 				!expo.is_owned &&
 				!expo.is_enemy &&
-				sqdist(wilmap::my_start, expo.tile) < 72*72) {
+				sqdist(wilmap::my_main_tile, expo.tile) < 72*72) {
 				my_tile = expo.tile;
 			}
 		}

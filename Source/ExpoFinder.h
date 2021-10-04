@@ -5,6 +5,7 @@
 #include "WillytBuild.h"
 #include "WillytUnits.h"
 #include "WillytEnemy.h"
+#include "WillytState.h"
 #include "ExpoUtilities.h"
 #include "MapUtilities.h"
 

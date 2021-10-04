@@ -79,6 +79,7 @@ void determine_natu(int i) {
 void determine_my_natu() {
 	BWAPI::TilePosition t = wilmap::natu_tiles[wilmap::mm];
 	wilmap::my_natu = BWAPI::Position{ 32 * t.x + 32, 32 * t.y + 16 };
+	wilmap::my_natu_tile = BWAPI::TilePosition(t.x - 1, t.y - 1);
 	//BWAPI::Broodwar->printf("natural base: %d, %d", t.x, t.y);
 	return;
 }

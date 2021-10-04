@@ -1,6 +1,7 @@
 #pragma once
 #include <BWAPI.h>
 #include "WillytMap.h"
+#include "WillytState.h"
 #include "Utilities.h"
 #include "MapUtilities.h"
 #include "MapInfluence.h"

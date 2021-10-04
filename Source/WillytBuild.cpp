@@ -84,7 +84,10 @@ namespace wilbuild
 		case Terran_Covert_Ops:			covertops.push_back(unit); break;
 		case Terran_Physics_Lab:		physicslabs.push_back(unit); break;
 		}
-		buildings.push_back(unit);
+		if (is_none(wilmap::en_start) ||
+			sqdist(wilmap::en_start, unit->getTilePosition()) > 1024) {
+			buildings.push_back(unit); //excluding proxy buildings
+		}
 
 		if (!unit->isLifted()) {
 			if (unit->getType().canBuildAddon()) {

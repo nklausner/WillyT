@@ -59,7 +59,8 @@ namespace wilmap
 
 	//player special locations
 
-	extern BWAPI::TilePosition my_start;
+	extern BWAPI::TilePosition my_main_tile;
+	extern BWAPI::TilePosition my_natu_tile;
 	extern BWAPI::Position my_main;
 	extern BWAPI::Position my_natu;
 	extern BWAPI::Position my_main_def;

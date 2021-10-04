@@ -43,7 +43,8 @@ namespace wilmap
 	std::vector<BWAPI::TilePosition> my_highdefvec;
 	std::vector<BWAPI::TilePosition> my_thirddefvec;
 
-	BWAPI::TilePosition my_start = BWAPI::TilePositions::None;
+	BWAPI::TilePosition my_main_tile = BWAPI::TilePositions::None;
+	BWAPI::TilePosition my_natu_tile = BWAPI::TilePositions::None;
 	BWAPI::Position my_main = BWAPI::Positions::None;
 	BWAPI::Position my_natu = BWAPI::Positions::None;
 	BWAPI::Position my_main_def = BWAPI::Positions::None;

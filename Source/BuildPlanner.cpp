@@ -4,8 +4,8 @@ namespace wilplanner
 {
 
 	void create_buildplan() {
-		int x0 = wilmap::my_start.x;
-		int y0 = wilmap::my_start.y;
+		int x0 = wilmap::my_main_tile.x;
+		int y0 = wilmap::my_main_tile.y;
 		wilmap::plan_small.clear();
 		wilmap::plan_large.clear();
 		wilmap::plan_small_tech.clear();
@@ -22,8 +22,8 @@ namespace wilplanner
 		balance_buildplan();
 		avoid_refinery_trap();
 		avoid_depot_trap();
-		sort_vector_tile(wilmap::plan_small, wilmap::my_start);
-		sort_vector_tile(wilmap::plan_large, wilmap::my_start);
+		sort_vector_tile(wilmap::plan_small, wilmap::my_main_tile);
+		sort_vector_tile(wilmap::plan_large, wilmap::my_main_tile);
 		fill_vector_tech(wilmap::plan_small, wilmap::plan_small_tech, 3, 2);
 		fill_vector_tech(wilmap::plan_large, wilmap::plan_large_tech, 6, 3);
 		//BWAPI::Broodwar->printf("create build plan");
