@@ -33,6 +33,7 @@ void MapInfo::display() {
 	display_army_groups();
 	display_enemy_positions();
 	//display_enemy_positions_surround();
+	display_enemy_units(wilenemy::siegetanks);
 	//display_blocked_expo();
 	//display_buildplan();
 	//display_choke_directions();
@@ -293,10 +294,8 @@ void MapInfo::display_army_positions() {
 }
 
 void MapInfo::display_enemy_positions() {
-	for (BWAPI::Position p : wilenemy::positions) {
-		BWAPI::Broodwar->drawLineMap(p.x - 8, p.y - 8, p.x + 8, p.y + 8, BWAPI::Colors::Red);
-		BWAPI::Broodwar->drawLineMap(p.x - 8, p.y + 8, p.x + 8, p.y - 8, BWAPI::Colors::Red);
-	}
+	for (BWAPI::Position p : wilenemy::positions)
+		draw_cross(p, 8, BWAPI::Colors::Red);
 	return;
 }
 
@@ -313,6 +312,12 @@ void MapInfo::display_enemy_positions_surround() {
 	return;
 }
 
+void MapInfo::display_enemy_units(std::vector<UnitInfo>& my_vec) {
+	for (UnitInfo& u : my_vec)
+		draw_cross(u.pos, 6, BWAPI::Colors::Purple);
+	return;
+}
+
 void MapInfo::display_holding_bunker() {
 	if (willyt::hold_bunker &&
 		!wilbuild::bunkers.empty()) {
@@ -325,9 +330,8 @@ void MapInfo::display_holding_bunker() {
 }
 
 void MapInfo::display_available_scans() {
-	for (BWAPI::Unit u : wilbuild::comsatstations) {
+	for (BWAPI::Unit u : wilbuild::comsatstations)
 		BWAPI::Broodwar->drawTextMap(u->getPosition(), "%d scans", willyt::available_scans);
-	}
 	return;
 }
 
@@ -410,8 +414,16 @@ void MapInfo::draw_pos_vec(std::vector<BWAPI::Position> &v, int c) {
 	return;
 }
 
+void MapInfo::draw_cross(BWAPI::Position p, int s, BWAPI::Color c) {
+	if (!is_none(p) && in_viewport(p)) {
+		BWAPI::Broodwar->drawLineMap(p.x - s, p.y, p.x + s, p.y, c);
+		BWAPI::Broodwar->drawLineMap(p.x, p.y + s, p.x, p.y - s, c);
+	}
+	return;
+}
+
 void MapInfo::draw_crosshair(BWAPI::Position p, int s, BWAPI::Color c) {
-	if (p != BWAPI::Positions::None) {
+	if (!is_none(p) && in_viewport(p)) {
 		BWAPI::Broodwar->drawLineMap(p.x - s, p.y, p.x + s, p.y, c);
 		BWAPI::Broodwar->drawLineMap(p.x, p.y + s, p.x, p.y - s, c);
 		BWAPI::Broodwar->drawCircleMap(p, s, c, false);

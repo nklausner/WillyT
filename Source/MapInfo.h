@@ -30,6 +30,7 @@ private:
 	void display_army_positions();
 	void display_enemy_positions();
 	void display_enemy_positions_surround();
+	void display_enemy_units(std::vector<UnitInfo>& my_vec);
 	void display_army_groups();
 	void display_army_group(std::vector<BWAPI::Unit>& my_vec, BWAPI::Position& my_pos, int& my_sup, int color);
 
@@ -53,6 +54,7 @@ private:
 	void draw_tile_vec_index(std::vector<BWAPI::TilePosition> &my_list);
 	void draw_line(std::vector<BWAPI::Position> &v, int c);
 	void draw_pos_vec(std::vector<BWAPI::Position> &v, int c);
+	void draw_cross(BWAPI::Position p, int s, BWAPI::Color c);
 	void draw_crosshair(BWAPI::Position p, int s, BWAPI::Color c);
 	void display_pair_vectors(std::vector<BWAPI::Position> &v0, std::vector<BWAPI::Position> &v1);
 	void display_threats_all();

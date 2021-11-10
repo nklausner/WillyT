@@ -117,6 +117,7 @@ int check_using_hardcoded()
 	//if (wilenemy::name == "Chris Coxe" || wilenemy::name == "ZZZKBot") { return 1; }
 	//if (wilenemy::name == "Stardust" || wilenemy::name == "Locutus") { return 4; }
 	if (wilenemy::name == "Stardust") { return 4; }
+	if (wilenemy::name == "krasi0P") { return 3; }
 	return 0;
 }
 

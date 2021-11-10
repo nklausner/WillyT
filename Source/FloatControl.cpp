@@ -13,6 +13,7 @@ void FloatControl::update(ExpoManager& expomanager)
 	}
 	if ((willyt::strategy == 3 || willyt::strategy == 4))
 	{
+		//relocate barracks to natural
 		if (willyt::has_natural &&
 			wilenemy::race != BWAPI::Races::Terran &&
 			!willyt::cannon_rush_alert &&
@@ -22,11 +23,17 @@ void FloatControl::update(ExpoManager& expomanager)
 			check_relocation_wallin(wilbuild::barracks.front(), wilmap::natu_wall_tile[wilmap::mm][0]);
 			check_open_close_wallin(wilbuild::barracks.front(), wilmap::natu_wall_tile[wilmap::mm][0]);
 		}
-		if (!wilbuild::engineerbays.empty() &&
-			!wilbuild::engineerbays.front()->isLifted() &&
-			wilbuild::engineerbays.front()->isCompleted())
-		{
-			wilbuild::lift(wilbuild::engineerbays.front());
+		//lift engybay and rax
+		if (true) {
+			lift_all(wilbuild::engineerbays);
+		}
+		if (!wilenemy::siegetanks.empty() && willyt::my_time > 360) {
+			lift_all(wilbuild::barracks);
+		}
+		//control floating buildings for scouting
+		if (!wilenemy::siegetanks.empty()) {
+			update_float_scouts();
+			float_scout_enemy_siegetanks();
 		}
 	}
 	//if (willyt::strategy == 4 &&
@@ -44,6 +51,15 @@ void FloatControl::update(ExpoManager& expomanager)
 
 
 
+void FloatControl::lift_all(std::vector<BWAPI::Unit>& my_vec)
+{
+	for (BWAPI::Unit u : my_vec) {
+		if (!u->isLifted() && u->isCompleted()) {
+			wilbuild::lift(u);
+		}
+	}
+	return;
+}
 void FloatControl::check_relocation(BWAPI::Unit my_unit)
 {
 	BWAPI::TilePosition my_old = my_unit->getTilePosition();
@@ -171,4 +187,52 @@ void FloatControl::check_land_base_when_cannon_rushed(BWAPI::Unit u, ExpoManager
 		need_occupying = false;
 	}
 	return;
+}
+
+
+void FloatControl::float_scout_enemy_siegetanks()
+{
+	BWAPI::Unit my_unit = NULL;
+	BWAPI::Position my_pos = get_enemy_siegetank_pos();
+	if (!is_none(my_pos) && !floaters.empty()) {
+		my_unit = get_closest(floaters, my_pos);
+		if (my_unit) {
+			my_unit->move(linear_interpol_abs(my_pos, my_unit->getPosition(), 288));
+		}
+	}
+	for (BWAPI::Unit u : floaters) {
+		if (u != NULL && (u != my_unit || u->isUnderAttack())) {
+			u->move(wilgroup::player_grd_pos);
+		}
+	}
+	return;
+}
+void FloatControl::update_float_scouts()
+{
+	floaters.clear();
+	for (BWAPI::Unit u : wilbuild::barracks) {
+		if (u->isLifted()) {
+			floaters.push_back(u);
+		}
+	}
+	for (BWAPI::Unit u : wilbuild::engineerbays) {
+		if (u->isLifted()) {
+			floaters.push_back(u);
+		}
+	}
+	return;
+}
+BWAPI::Position FloatControl::get_enemy_siegetank_pos()
+{
+	BWAPI::Position min_pos = BWAPI::Positions::None;
+	int min_sqd = 409600;
+	for (UnitInfo &ui : wilenemy::siegetanks) {
+		if (!is_none(ui.pos) &&
+			!BWAPI::Broodwar->isVisible(ui.pos.x / 32, ui.pos.y / 32) &&
+			sqdist(wilgroup::player_grd_pos, ui.pos) < min_sqd) {
+			min_sqd = sqdist(wilgroup::player_grd_pos, ui.pos);
+			min_pos = ui.pos;
+		}
+	}
+	return min_pos;
 }

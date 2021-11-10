@@ -51,6 +51,11 @@ void Info::display() {
 	//BWAPI::Broodwar->drawTextScreen(10, 220, "%d cloak supply", wilenemy::supply_cloak / 2);
 	//BWAPI::Broodwar->drawTextScreen(10, 200, "%d near bunker", wilenemy::supply_near_bunker / 2);
 
+	if (wilenemy::race == BWAPI::Races::Terran) {
+		BWAPI::Broodwar->drawTextScreen(10, 150, wilenemy::name.c_str());
+		BWAPI::Broodwar->drawTextScreen(10, 160, "%d siegetanks", wilenemy::siegetanks.size());
+	}
+
 	//list_states();
 	//list_units(willyt::target_vector);
 	//list_tanks();

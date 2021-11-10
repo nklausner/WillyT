@@ -88,7 +88,7 @@ bool check_proxy_prod_buildings() {
 
 bool check_pressure_on_bunker() {
 	int my_supply = 2 * willyt::sup_bio + 2 * willyt::sup_mech;
-	if (BWAPI::Broodwar->getFrameCount() > 10080 ||
+	if (willyt::my_time > 420 ||
 		my_supply > wilenemy::supply_army ||
 		wilbuild::bunkers.empty())
 		return false;
@@ -96,10 +96,11 @@ bool check_pressure_on_bunker() {
 		return true;
 		//wilenemy::supply_near_bunker > 0 &&
 		//wilenemy::supply_near_bunker >= my_supply
+	unsigned alert_time = (wilenemy::race == BWAPI::Races::Zerg) ? 210 : 270;
 	if (willyt::fast_expand &&
 		wilenemy::supply_army > my_supply &&
 		!wilbuild::bunkers.empty() &&
-		BWAPI::Broodwar->getFrameCount() > 6480)
+		willyt::my_time > alert_time)
 		return true;
 	return false;
 }

@@ -10,6 +10,17 @@
 
 //2018-03-11: list for storing enemy information
 //2019-08-17: dividing namespace and struct
+//2021-10-05: adding UnitInfo
+
+
+class UnitInfo
+{
+public:
+	UnitInfo(BWAPI::Unit u);
+	BWAPI::Unit unit;
+	unsigned id;
+	BWAPI::Position pos;
+};
 
 
 namespace wilenemy
@@ -109,6 +120,8 @@ namespace wilenemy
 	extern int target_count;
 
 	extern std::vector<BWAPI::Position> unclaimed_expo_pos;
+
+	extern std::vector<UnitInfo> siegetanks;
 }
 
 struct EnemyManager
@@ -140,6 +153,11 @@ private:
 	bool is_small(BWAPI::UnitType t);
 	bool can_cloak(BWAPI::UnitType t);
 	void clear_deducted_build_tiles(BWAPI::Position p);
+
+	void append_unitinfo(BWAPI::Unit u);
+	void remove_unitinfo(BWAPI::Unit u);
+	void remove_from(std::vector<UnitInfo>& my_vector, BWAPI::Unit u);
+	void update_vector(std::vector<UnitInfo>& my_vector);
 
 };
 

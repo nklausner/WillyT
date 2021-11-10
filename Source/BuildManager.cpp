@@ -332,7 +332,6 @@ BWAPI::TilePosition BuildManager::choose_turret_tile() {
 
 
 BWAPI::UnitType BuildManager::check_advanced() {
-	//check_lifting();
 	using namespace wilbuild;
 	using namespace BWAPI::UnitTypes;
 	if (willyt::strategy <= 2 && min >= 200) {
@@ -358,22 +357,6 @@ BWAPI::UnitType BuildManager::check_advanced() {
 		}
 	}
 	return my_type;
-}
-
-void BuildManager::check_lifting() {
-	if (wilbuild::factories.size() < 6 && 
-		min > 450 && gas > 300 &&
-		!wilbuild::engineerbays.empty() &&
-		BWAPI::Broodwar->self()->getUpgradeLevel(BWAPI::UpgradeTypes::Terran_Infantry_Armor) == willyt::max_bio_upgrade) {
-		BWAPI::Unit e = wilbuild::engineerbays.front();
-		if (!e->isLifted() &&
-			e->isCompleted() &&
-			e->isIdle()) {
-			e->lift();
-			clear_build_area(wilmap::build_map_var, wilmap::build_map_fix, e);
-		}
-	}
-	return;
 }
 
 bool BuildManager::need_one_bunker() {

@@ -53,7 +53,6 @@ private:
 	std::vector<BWAPI::TilePosition> turret_tiles;
 
 	BWAPI::TilePosition sas_tile;
-	void check_lifting();
 	bool need_one_bunker();
 	bool soon_completed(std::vector<BWAPI::Unit> &my_vec);
 

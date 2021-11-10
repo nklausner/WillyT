@@ -1,5 +1,15 @@
 #include "WillytEnemy.h"
 
+
+UnitInfo::UnitInfo(BWAPI::Unit u)
+{
+	unit = u;
+	id = u->getID();
+	pos = u->getPosition();
+	//BWAPI::Broodwar->printf("created enemy %s", u->getType().c_str());
+}
+
+
 namespace wilenemy
 {
 	BWAPI::Race race = BWAPI::Races::Unknown;
@@ -82,6 +92,8 @@ namespace wilenemy
 	int target_count = 0;
 
 	std::vector<BWAPI::Position> unclaimed_expo_pos;
+
+	std::vector<UnitInfo> siegetanks;
 }
 
 EnemyManager::EnemyManager() {
@@ -113,6 +125,7 @@ void EnemyManager::append_unit(BWAPI::Unit unit) {
 	if (t.supplyRequired() > 0) {
 		change_supply(t, t.supplyRequired());
 		check_tech_unit(t);
+		append_unitinfo(unit);
 	}
 	if (t.isBuilding()) {
 		if (!vector_holds(positions, p)) { positions.push_back(p); }
@@ -130,8 +143,10 @@ void EnemyManager::remove_unit(BWAPI::Unit unit) {
 
 	ids.erase(std::remove(ids.begin(), ids.end(), unit->getID()), ids.end());
 	BWAPI::UnitType t = unit->getType();
-	if (t.supplyRequired() > 0) { change_supply(t, -1 * t.supplyRequired()); }
-
+	if (t.supplyRequired() > 0) {
+		change_supply(t, -1 * t.supplyRequired());
+		remove_unitinfo(unit);
+	}
 	if (t.isBuilding()) {
 		vector_remove(positions, unit->getPosition());
 		if (!unit->isLifted()) { clear_build_area(wilmap::build_map_var, wilmap::build_map_fix, unit); }
@@ -225,6 +240,8 @@ void EnemyManager::update() {
 	collect_intruders(wilenemy::near_bunkers, wilmap::bunker_map);
 	supply_near_bunkers = count_supply(near_bunkers);
 	check_incomplete_defense();
+
+	update_vector(siegetanks);
 	return;
 }
 
@@ -461,6 +478,52 @@ void EnemyManager::check_tech_unit(BWAPI::UnitType type) {
 	}
 	return;
 }
+
+
+
+void EnemyManager::append_unitinfo(BWAPI::Unit u) {
+	using namespace wilenemy;
+	using namespace BWAPI::UnitTypes;
+	switch (u->getType())
+	{
+	case Terran_Siege_Tank_Tank_Mode:	siegetanks.push_back(UnitInfo(u)); break;
+	case Terran_Siege_Tank_Siege_Mode:	siegetanks.push_back(UnitInfo(u)); break;
+	}
+	return;
+}
+void EnemyManager::remove_unitinfo(BWAPI::Unit u) {
+	using namespace wilenemy;
+	using namespace BWAPI::UnitTypes;
+	switch (u->getType())
+	{
+	case Terran_Siege_Tank_Tank_Mode:	remove_from(siegetanks, u); break;
+	case Terran_Siege_Tank_Siege_Mode:	remove_from(siegetanks, u); break;
+	}
+	return;
+}
+void EnemyManager::remove_from(std::vector<UnitInfo>& my_vector, BWAPI::Unit u) {
+	for (std::size_t i = 0; i < my_vector.size(); ++i) {
+		if (my_vector[i].unit == u) {
+			my_vector.erase(my_vector.begin() + i);
+			//BWAPI::Broodwar->printf("destroyed enemy %s", u->getType().c_str());
+			break;
+		}
+	}
+	return;
+}
+void EnemyManager::update_vector(std::vector<UnitInfo>& my_vector) {
+	for (UnitInfo& u : my_vector) {
+		if (u.unit->exists()) {
+			u.pos = u.unit->getPosition();
+		} else if (!is_none(u.pos) &&
+			BWAPI::Broodwar->isVisible(u.pos.x / 32, u.pos.y / 32)) {
+			u.pos = BWAPI::Positions::None;
+		}
+	}
+	return;
+}
+
+
 
 void EnemyManager::check_time_lair(BWAPI::Unit u, bool just_changed) {
 	if (u->getType() == BWAPI::UnitTypes::Zerg_Lair)
