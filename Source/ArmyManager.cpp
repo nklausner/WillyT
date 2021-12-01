@@ -146,17 +146,15 @@ void ArmyManager::check_militia(bool is_under_attack, int def_strength) {
 		call_militia(relevant_strength - def_strength);
 	}
 	if (willyt::strategy == 1 &&
-		!willyt::first_attack &&
+		willyt::do_bio_scv_rush &&
 		!wilenemy::goes_megamacro &&
 		willyt::att_target_pos != BWAPI::Positions::None) {
-		willyt::first_attack = true;
+		willyt::do_bio_scv_rush = false;
 		call_militia(7);
 		create_repulsive_field_at_enemy_natural();
 		//BWAPI::Broodwar->sendText("It's go time!");
 	}
-	if (willyt::carrier_rush_alert &&
-		!willyt::first_attack) {
-		willyt::first_attack = true;
+	if (willyt::carrier_rush_alert) {
 		call_militia(6);
 	}
 	if (willyt::sup_mil > 0 &&

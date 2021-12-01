@@ -23,8 +23,10 @@ void check_mega_macro();
 void check_abort_rushing();
 void check_carrier_rush();
 void check_scout_natu();
+bool check_lurker_rush();
 
 void change_strategies();
 void check_resign();
 bool has_only_island_buildings();
+bool has_only_floating_buildings();
 bool scout_near(BWAPI::Position my_pos);

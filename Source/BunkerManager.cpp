@@ -24,7 +24,9 @@ void BunkerManager::load_bunkers()
 	std::vector<Fighter2>::iterator im = wilunits::marines.begin();
 	unsigned ib = 0;
 	for (BWAPI::Unit bunker : wilbuild::bunkers) {
-		if (bunker->isCompleted() && bunker->getSpaceRemaining() > 0)
+		if (bunker->exists() &&
+			bunker->isCompleted() &&
+			bunker->getSpaceRemaining() > 0)
 		{
 			unsigned is = bunker->getSpaceRemaining();
 			while (is > 0 && im != wilunits::marines.end())

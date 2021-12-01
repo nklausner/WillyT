@@ -32,6 +32,7 @@ namespace willyt
 	//supply tresholds
 	extern int attack_supply;
 	extern int mining_supply;
+	extern int attack_supply_modifier;
 
 	//available resources containers
 	extern int mineral_count;
@@ -41,7 +42,7 @@ namespace willyt
 
 	//tactic booleans
 	extern bool is_swarming;
-	extern bool first_attack;
+	extern bool do_bio_scv_rush;
 	extern bool is_choke_def;
 	extern bool is_rushing;
 
@@ -68,6 +69,7 @@ namespace willyt
 	extern bool proxy_prod_alert;
 	extern bool cannon_rush_alert;
 	extern bool carrier_rush_alert;
+	extern bool lurker_rush_alert;
 	extern bool hold_bunker;
 	//extern bool guard_siege;
 	extern bool flyer_attack_airdef;
@@ -95,6 +97,7 @@ namespace willyt
 
 struct StateManager
 {
+	void init();
 	void update(int n_ds);
 };
 

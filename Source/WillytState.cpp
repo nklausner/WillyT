@@ -21,6 +21,7 @@ namespace willyt
 
 	int attack_supply = 15;
 	int mining_supply = 20;
+	int attack_supply_modifier = 0;
 
 	int mineral_count = 8;
 	int geyser_count = 1;
@@ -28,7 +29,7 @@ namespace willyt
 	int min_scv_count_gas = 0;
 
 	bool is_swarming = false;
-	bool first_attack = false;
+	bool do_bio_scv_rush = false;
 	bool is_choke_def = false;
 	bool is_rushing = false;
 
@@ -55,6 +56,7 @@ namespace willyt
 	bool proxy_prod_alert = false;
 	bool cannon_rush_alert = false;
 	bool carrier_rush_alert = false;
+	bool lurker_rush_alert = false;
 	bool hold_bunker = false;
 	//bool guard_siege = false;
 	bool flyer_attack_airdef = false;
@@ -77,6 +79,43 @@ namespace willyt
 }
 
 
+void StateManager::init()
+{
+	using namespace willyt;
+
+	//strategy dependent adaptations
+	switch (strategy) {
+	case 1:
+		do_bio_scv_rush = true;
+		go_bio = true;
+		fast_expand = false;
+		attack_supply_modifier = 0;
+		break;
+	case 2:
+		go_bio = true;
+		fast_expand = true;
+		attack_supply_modifier = 6;
+		break;
+	case 3:
+		go_bio = false;
+		fast_expand = true;
+		attack_supply_modifier = 12;
+		break;
+	case 4:
+		go_bio = false;
+		fast_expand = false;
+		attack_supply_modifier = 12;
+		break;
+	case 6:
+		go_bio = true;
+		fast_expand = false;
+		attack_supply_modifier = 6;
+		break;
+	}
+	return;
+}
+
+
 void StateManager::update(int n_ds)
 {
 	using namespace willyt;
@@ -89,35 +128,16 @@ void StateManager::update(int n_ds)
 	attack_supply = (my_time / 20) + (15 * BWAPI::Broodwar->enemies().size()) - 15;
 	if (attack_supply < 15) { attack_supply = 15; }
 	if (attack_supply > 60) { attack_supply = 60; }
+	attack_supply += attack_supply_modifier;
 
-	//strategy dependent adaptations
-	switch (strategy) {
-	case 1:
-		fast_expand = false;
-		break;
-	case 2:
-		attack_supply += 6;
-		break;
-	case 3:
-		attack_supply += 12;
-		go_bio = false;
-		break;
-	case 4:
-		attack_supply = 96;
-		go_bio = false;
-		fast_expand = false;
+	if (strategy == 4) {
+		attack_supply = 90;
 		if (mining_supply > 40) { mining_supply = 40; }
 		if (mining_supply > 30 && my_time < 900) { mining_supply = 30; }
-		break;
-	case 6:
-		attack_supply += 6;
-		fast_expand = false;
-		break;
 	}
 
-	if (willyt::carrier_rush_alert) { attack_supply = 12; }
-
 	//other stuff
+	if (carrier_rush_alert) { attack_supply = 12; }
 	if (is_rushing && my_time > 600) { is_rushing = false; }
 	target_vector.clear();
 	has_transport = (n_ds > 0) ? true : false;

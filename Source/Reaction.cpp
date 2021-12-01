@@ -11,6 +11,7 @@ void check_all_reactions() {
 	check_abort_rushing();
 	check_carrier_rush();
 	check_scout_natu();
+	willyt::lurker_rush_alert = check_lurker_rush();
 	change_strategies();
 	check_resign();
 	return;
@@ -174,12 +175,23 @@ void check_scout_natu() {
 	return;
 }
 
+bool check_lurker_rush()
+{
+	if (willyt::my_time < 240 &&
+		wilenemy::has_lair &&
+		wilenemy::has_hydraden) {
+		return true;
+	}
+	return willyt::lurker_rush_alert;
+}
+
 void change_strategies() {
 	using namespace willyt;
 	if (rush_alert &&
 		strategy != 1) {
 		strategy = 1;
 		go_bio = true;
+		fast_expand = false;
 		BWAPI::Broodwar->printf("change strategy to 1 to defend rush");
 	}
 	if (proxy_prod_alert &&
@@ -188,17 +200,22 @@ void change_strategies() {
 		strategy != 1) {
 		strategy = 1;
 		go_bio = true;
+		fast_expand = false;
 		BWAPI::Broodwar->printf("change strategy to 1 to defend proxy");
 	}
 	if (proxy_alert && !cannon_rush_alert &&
 		(wilenemy::has_forge || avoid_grddef)) {
 		strategy = 3;
-		fast_expand = false;
 		go_bio = false;
+		fast_expand = false;
 		is_rushing = true;
 		cannon_rush_alert = true;
 		stop_all_build_missions();
 		BWAPI::Broodwar->printf("change strategy to 3 to defend cannon rush");
+	}
+	if (lurker_rush_alert && strategy == 1) {
+		do_bio_scv_rush = false;
+		attack_supply_modifier = 6;
 	}
 	return;
 }
@@ -218,12 +235,25 @@ void check_resign() {
 		BWAPI::Broodwar->sendText("human win");
 		BWAPI::Broodwar->leaveGame();
 	}
+	if (willyt::my_time > 600 &&
+		BWAPI::Broodwar->self()->supplyUsed() == 0 &&
+		has_only_floating_buildings()) {
+		BWAPI::Broodwar->sendText("above the clouds");
+		BWAPI::Broodwar->leaveGame();
+	}
 	return;
 }
 
 bool has_only_island_buildings() {
 	for (BWAPI::Unit u : wilbuild::buildings)
 		if (u->exists() && get_ground_dist(u) != -1)
+			return false;
+	return true;
+};
+
+bool has_only_floating_buildings() {
+	for (BWAPI::Unit u : wilbuild::buildings)
+		if (u->exists() && !u->isLifted())
 			return false;
 	return true;
 }

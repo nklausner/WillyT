@@ -4,6 +4,7 @@
 #include "ExpoManager.h"
 #include "WillytState.h"
 #include "WillytBuild.h"
+#include "WillytUnits.h"
 #include "WillytMap.h"
 #include "WillytEnemy.h"
 #include "WillyThreat.h"

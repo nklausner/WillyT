@@ -9,10 +9,10 @@ void Trainer::init() {
 
 	if (willyt::strategy == 1) {
 		scv_rax_count = 10;
-		if (wilenemy::race == BWAPI::Races::Zerg) {
-			willyt::eight_rax = true;
-			scv_rax_count = 8;
-		}
+		//if (wilenemy::race == BWAPI::Races::Zerg) {
+		//	willyt::eight_rax = true;
+		//	scv_rax_count = 8;
+		//}
 	}
 	if (willyt::strategy == 3) {
 		tank_goli_ratio = (wilenemy::race == BWAPI::Races::Zerg) ? 2 : 3;

@@ -224,15 +224,17 @@ void FloatControl::update_float_scouts()
 }
 BWAPI::Position FloatControl::get_enemy_siegetank_pos()
 {
-	BWAPI::Position min_pos = BWAPI::Positions::None;
-	int min_sqd = 409600;
 	for (UnitInfo &ui : wilenemy::siegetanks) {
 		if (!is_none(ui.pos) &&
-			!BWAPI::Broodwar->isVisible(ui.pos.x / 32, ui.pos.y / 32) &&
-			sqdist(wilgroup::player_grd_pos, ui.pos) < min_sqd) {
-			min_sqd = sqdist(wilgroup::player_grd_pos, ui.pos);
-			min_pos = ui.pos;
+			sqdist(ui.pos, wilgroup::player_grd_pos) < 1048576)
+		{
+			for (Fighter2 &f : wilunits::siegetanks) {
+				if (f.unit->exists() &&
+					sqdist(ui.pos, f.unit->getPosition()) < 200704) {
+					return ui.pos;
+				}
+			}
 		}
 	}
-	return min_pos;
+	return BWAPI::Positions::None;
 }

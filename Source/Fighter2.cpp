@@ -27,6 +27,7 @@ Fighter2::Fighter2(BWAPI::Unit my_unit) {
 	retreat_queue = 0;
 	spider_mine_count = 0;
 	command_frames = 10;
+	idle_queue = 0;
 
 	target = NULL;
 	transport = NULL;
@@ -94,6 +95,7 @@ void Fighter2::update()
 		unit->getOrder() == BWAPI::Orders::MedicHeal ||
 		unit->getOrder() == BWAPI::Orders::Sieging ||
 		unit->getOrder() == BWAPI::Orders::Unsieging) {							//--ability usage
+		idle_queue++;
 		return;
 	}
 	specials_allowed = false;
@@ -101,6 +103,7 @@ void Fighter2::update()
 	posi = unit->getPosition();
 	target = NULL;
 	safe_sum(attack_queue, -1);
+	idle_queue = 0;
 	//if (is_attacker) { BWAPI::Broodwar->drawTextMap(posi, "%cATTACK", 6); }
 	//BWAPI::Broodwar->drawTextMap(posi, "%d", attack_queue);
 
@@ -368,6 +371,18 @@ void Fighter2::check_cloak() {
 	if (unit->isCloaked() && !unit->isUnderAttack()) {
 		unit->decloak();
 	}
+	return;
+}
+void Fighter2::check_force_idle() {
+	if (idle_queue >= 128 &&
+		!unit->isMaelstrommed() &&
+		!unit->isStasised() &&
+		!unit->isLockedDown() &&
+		unit->getTransport() == NULL) {
+		unit->attack(attack_pos);
+		BWAPI::Broodwar->printf("force move idle marine");
+	}
+	return;
 }
 
 

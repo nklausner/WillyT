@@ -33,6 +33,7 @@ public:
 	void check_flare();
 	void check_lockd();
 	void check_cloak();
+	void check_force_idle();
 
 	//mechanicals
 
@@ -80,6 +81,7 @@ private:
 	int retreat_queue;
 	int spider_mine_count;
 	int command_frames;
+	int idle_queue;
 
 	//targeting
 

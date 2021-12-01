@@ -293,8 +293,13 @@ void SCV::set_build_mission(BWAPI::UnitType type, BWAPI::TilePosition &tile)
 	build_pos = BWAPI::Position((x0 + x1) / 2, (y0 + y1) / 2);
 	build_queue = 128 + 4 * unit->getPosition().getApproxDistance(build_pos);
 	build_sqdist = 2304;
-	if (type == BWAPI::UnitTypes::Terran_Missile_Turret) { build_queue += 8192; }
-	if (type == BWAPI::UnitTypes::Terran_Refinery) { build_sqdist = 9216; }
+	if (type == BWAPI::UnitTypes::Terran_Missile_Turret) {
+		build_queue += 8192;
+		mapsafesub(y0, 16);
+	}
+	if (type == BWAPI::UnitTypes::Terran_Refinery) {
+		build_sqdist = 9216;
+	}
 	block_count = 0;
 	wilbuild::planned_builds.push_back(type);
 	//BWAPI::Broodwar->printf("SCV build queue: %d", build_queue);

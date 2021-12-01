@@ -16,6 +16,7 @@ void WillytAI::onStart()
 	expomanager.init();				//requires distances
 	mapanalysis.init_advanced();	//requires naturals
 	calculate_army_positions();
+	statemanager.init();
 	trainer.init();
 	buildmanager.init();
 
@@ -225,6 +226,10 @@ void WillytAI::onUnitRenegade(BWAPI::Unit unit)
 		unit->getType().isAddon()) {
 		wilbuild::remove_building(unit);
 		enemymanager.remove_unit(unit);
+	}
+	if (unit->getPlayer() == BWAPI::Broodwar->self() &&
+		unit->getType() == BWAPI::UnitTypes::Terran_Command_Center) {
+		expomanager.desert_expo(unit->getTilePosition());
 	}
 	return;
 }
