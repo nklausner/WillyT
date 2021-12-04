@@ -21,13 +21,14 @@ Fighter2::Fighter2(BWAPI::Unit my_unit) {
 	attack_pos = willyt::gather_pos;
 	special_pos = BWAPI::Positions::None;
 	destin_pos = BWAPI::Positions::None;
+	stuck_pos = BWAPI::Positions::None;
 
 	attack_queue = 0;
 	special_queue = 0;
 	retreat_queue = 0;
 	spider_mine_count = 0;
 	command_frames = 10;
-	idle_queue = 0;
+	stuck_queue = 0;
 
 	target = NULL;
 	transport = NULL;
@@ -95,7 +96,6 @@ void Fighter2::update()
 		unit->getOrder() == BWAPI::Orders::MedicHeal ||
 		unit->getOrder() == BWAPI::Orders::Sieging ||
 		unit->getOrder() == BWAPI::Orders::Unsieging) {							//--ability usage
-		idle_queue++;
 		return;
 	}
 	specials_allowed = false;
@@ -103,7 +103,6 @@ void Fighter2::update()
 	posi = unit->getPosition();
 	target = NULL;
 	safe_sum(attack_queue, -1);
-	idle_queue = 0;
 	//if (is_attacker) { BWAPI::Broodwar->drawTextMap(posi, "%cATTACK", 6); }
 	//BWAPI::Broodwar->drawTextMap(posi, "%d", attack_queue);
 
@@ -373,14 +372,22 @@ void Fighter2::check_cloak() {
 	}
 	return;
 }
-void Fighter2::check_force_idle() {
-	if (idle_queue >= 128 &&
+void Fighter2::check_unstuck() {
+	if (unit->getPosition() == stuck_pos &&
 		!unit->isMaelstrommed() &&
 		!unit->isStasised() &&
 		!unit->isLockedDown() &&
-		unit->getTransport() == NULL) {
-		unit->attack(attack_pos);
-		BWAPI::Broodwar->printf("force move idle marine");
+		unit->getTransport() == NULL)
+	{
+		stuck_queue++;
+		if (stuck_queue >= 16) {
+			unit->stop();
+			stuck_queue = 0;
+		}
+	}
+	else {
+		stuck_pos = unit->getPosition();
+		stuck_queue = 0;
 	}
 	return;
 }

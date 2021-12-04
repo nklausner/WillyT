@@ -150,7 +150,7 @@ void ArmyManager::check_militia(bool is_under_attack, int def_strength) {
 		!wilenemy::goes_megamacro &&
 		willyt::att_target_pos != BWAPI::Positions::None) {
 		willyt::do_bio_scv_rush = false;
-		call_militia(7);
+		call_militia(6);
 		create_repulsive_field_at_enemy_natural();
 		//BWAPI::Broodwar->sendText("It's go time!");
 	}

@@ -33,7 +33,7 @@ public:
 	void check_flare();
 	void check_lockd();
 	void check_cloak();
-	void check_force_idle();
+	void check_unstuck();
 
 	//mechanicals
 
@@ -72,6 +72,7 @@ private:
 	BWAPI::Position attack_pos;
 	BWAPI::Position special_pos;
 	BWAPI::Position destin_pos;
+	BWAPI::Position stuck_pos;
 	void set_special_position(BWAPI::Position my_pos);
 
 	//queues
@@ -81,7 +82,7 @@ private:
 	int retreat_queue;
 	int spider_mine_count;
 	int command_frames;
-	int idle_queue;
+	int stuck_queue;
 
 	//targeting
 

@@ -362,7 +362,8 @@ BWAPI::UnitType BuildManager::check_advanced() {
 bool BuildManager::need_one_bunker() {
 	if (wilbuild::bunkers.size() < 1 &&
 		BWAPI::Broodwar->getFrameCount() < 21600 &&
-		soon_completed(wilbuild::barracks))
+		soon_completed(wilbuild::barracks) &&
+		!willyt::cannon_rush_alert)
 		return true;
 	return false;
 }

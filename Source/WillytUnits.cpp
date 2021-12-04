@@ -201,13 +201,10 @@ void UnitManager::update_all() {
 	return;
 }
 void UnitManager::update_eight() {
+	using namespace wilunits;
 	willyt::count_trapped = 0;
-	for (SCV& scv : wilunits::scvs) {
-		scv.check_being_trapped(willyt::count_trapped);
-	}
-	for (Fighter2& marine : wilunits::marines) {
-		marine.check_force_idle();
-	}
+	for (SCV& scv : scvs) { scv.check_being_trapped(willyt::count_trapped); }
+	for (Fighter2& m : marines) { m.check_unstuck(); }
 	return;
 }
 void UnitManager::assign_scout(BWAPI::Unit my_unit) {

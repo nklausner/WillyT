@@ -564,7 +564,8 @@ void SCV::check_being_trapped(int& count) {
 	}
 	if (unit->getTransport() ||
 		unit->getBuildUnit() ||
-		unit->isAttackFrame()) {
+		unit->isAttackFrame() ||
+		is_scout) {
 		stuck_queue = 0;
 		min_target_distance = 0;
 	}
