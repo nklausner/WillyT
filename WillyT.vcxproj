@@ -106,6 +106,7 @@
     <ClCompile Include="Source\Fighter2.cpp" />
     <ClCompile Include="Source\FloatControl.cpp" />
     <ClCompile Include="Source\Flyer.cpp" />
+    <ClCompile Include="Source\Formation.cpp" />
     <ClCompile Include="Source\Grouper.cpp" />
     <ClCompile Include="Source\Learner.cpp" />
     <ClCompile Include="Source\MicroUtilities.cpp" />
@@ -155,6 +156,7 @@
     <ClInclude Include="Source\Fighter2.h" />
     <ClInclude Include="Source\FloatControl.h" />
     <ClInclude Include="Source\Flyer.h" />
+    <ClInclude Include="Source\Formation.h" />
     <ClInclude Include="Source\Grouper.h" />
     <ClInclude Include="Source\Learner.h" />
     <ClInclude Include="Source\MicroUtilities.h" />

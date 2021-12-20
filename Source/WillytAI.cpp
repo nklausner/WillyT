@@ -95,6 +95,7 @@ void WillytAI::onFrame()
 		floatcontrol.update(expomanager);
 		threatmngr.ignore_stray_lurkers(willyt::available_scans);
 		unitmanager.update_eight();	//check scvs being stuck
+		update_formation(wilgroup::player_grd_pos);
 	}
 	else						//almost every frame (439 of 512)
 	{

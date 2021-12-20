@@ -22,6 +22,7 @@
 #include "Repair.h"
 #include "Cleaner.h"
 #include "Grouper.h"
+#include "Formation.h"
 #include "DropManager.h"
 #include "FloatControl.h"
 #include "Info.h"

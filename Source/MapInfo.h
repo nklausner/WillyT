@@ -7,6 +7,7 @@
 #include "WillytEnemy.h"
 #include "WillyThreat.h"
 #include "Grouper.h"
+#include "Formation.h"
 
 //2019-03-05: gather drawing infos to the map
 

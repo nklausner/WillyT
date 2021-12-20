@@ -201,9 +201,15 @@ double get_angle(BWAPI::Position p0, BWAPI::Position p1) {
 
 
 
-BWAPI::Position get_circle_pos(std::vector<BWAPI::Position> &my_vec, int i) {
+BWAPI::Position get_circle_pos(std::vector<BWAPI::Position> &my_vec, int i)
+{
 	return my_vec.at(i % my_vec.size());
 }
+BWAPI::Position get_circle_pos(BWAPI::Position c, int r, double a)
+{
+	return BWAPI::Position(c.x + (int)(r * cos(a)), c.y + (int)(r * sin(a)));
+}
+
 
 bool has_grd_connection(BWAPI::Position p0, BWAPI::Position p1)
 {

@@ -53,6 +53,8 @@ double get_angle(BWAPI::Position p0, BWAPI::Position p1);
 
 //get position on circle by index
 BWAPI::Position get_circle_pos(std::vector<BWAPI::Position> &my_vec, int i);
+//get position on circle (c, r) by angle (a)
+BWAPI::Position get_circle_pos(BWAPI::Position c, int r, double a);
 
 //check ground connenction between tile positions
 bool has_grd_connection(BWAPI::Position p0, BWAPI::Position p1);

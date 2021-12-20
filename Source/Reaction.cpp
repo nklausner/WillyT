@@ -6,6 +6,7 @@ void check_all_reactions() {
 	willyt::avoid_grddef = check_defense_focus();
 	willyt::proxy_alert = check_proxy_buildings();
 	willyt::proxy_prod_alert = check_proxy_prod_buildings();
+	check_cannon_rush_end();
 	willyt::hold_bunker = check_pressure_on_bunker();
 	check_mega_macro();
 	check_abort_rushing();
@@ -67,11 +68,13 @@ bool check_defense_focus() {
 	return false;
 }
 
-bool check_proxy_buildings() {
-	if (willyt::my_time < 600)
-		for (BWAPI::Position p : wilenemy::positions)
-			if (get_ground_dist(p) < 128)
-				return true;
+bool check_proxy_buildings()
+{
+	if (willyt::my_time < 600) {
+		for (BWAPI::Position p : wilenemy::positions) {
+			if (get_ground_dist(p) < 128) { return true; }
+		}
+	}
 	return false;
 }
 
@@ -85,6 +88,18 @@ bool check_proxy_prod_buildings() {
 					get_ground_dist(u) < 128)
 					return true;
 	return false;
+}
+
+void check_cannon_rush_end()
+{
+	if (willyt::cannon_rush_alert || willyt::proxy_alert) {
+		for (BWAPI::Position p : wilenemy::positions) {
+			if (get_ground_dist(p) < 128) { return; }
+		}
+	}
+	willyt::cannon_rush_alert = false;
+	willyt::proxy_alert = false;
+	return;
 }
 
 bool check_pressure_on_bunker() {
@@ -139,7 +154,7 @@ void check_mega_macro() {
 void check_abort_rushing() {
 	if (willyt::is_rushing) {
 		if (willyt::my_time > 600 ||
-			wilenemy::supply_cloak >= 4) {
+			wilenemy::supply_cloak >= 8) {
 			willyt::is_rushing = false;
 		}
  	}

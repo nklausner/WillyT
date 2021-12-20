@@ -55,6 +55,8 @@ void MapInfo::display() {
 	display_available_scans();
 	display_choke_defense_status();
 
+	draw_line(formation::formvec, BWAPI::Colors::Red);
+
 	//BWAPI::Broodwar->drawCircleMap(wilenemy::grdcenter, 32, BWAPI::Colors::Red, false);
 	//BWAPI::Broodwar->drawCircleMap(wilenemy::aircenter, 32, BWAPI::Colors::Blue, false);
 

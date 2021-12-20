@@ -17,6 +17,7 @@ bool check_zergling_rush();
 bool check_defense_focus();
 bool check_proxy_buildings();
 bool check_proxy_prod_buildings();
+void check_cannon_rush_end();
 bool check_pressure_on_bunker();
 
 void check_mega_macro();
