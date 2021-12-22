@@ -95,7 +95,7 @@ void WillytAI::onFrame()
 		floatcontrol.update(expomanager);
 		threatmngr.ignore_stray_lurkers(willyt::available_scans);
 		unitmanager.update_eight();	//check scvs being stuck
-		update_formation(wilgroup::player_grd_pos);
+		//update_formation(willyt::leader_pos);
 	}
 	else						//almost every frame (439 of 512)
 	{
@@ -188,6 +188,7 @@ void WillytAI::onUnitDestroy(BWAPI::Unit unit)
 		}
 		if (unit->getType() == BWAPI::UnitTypes::Terran_Command_Center) {
 			expomanager.desert_expo(unit->getTilePosition());
+			check_aborting_fast_expand();
 		}
 	}
 	else if (unit->getPlayer()->isEnemy(BWAPI::Broodwar->self())) {

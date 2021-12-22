@@ -6,6 +6,9 @@ void army_attack(BWAPI::Position& my_pos, bool is_attack)
 		army_attack_tank_only(my_pos, willyt::leader_pos, is_attack);
 		return;
 	}
+	//if (formation::useformation && !formation::line0.empty()) {
+	//	assign_formation(my_pos, is_attack);
+	//}
 
 	using namespace wilunits;
 	for (SCV &s : scvs)				if (s.is_militia)	s.set_attack(my_pos);
@@ -123,6 +126,114 @@ void execute_split(BWAPI::Position& dpos, BWAPI::Position& apos, std::vector<Fig
 		}
 	}
 }
+
+
+
+void assign_formation(BWAPI::Position& my_pos, bool is_attack)
+{
+	assign_formation_scvs(my_pos, is_attack);
+	assign_formation_firebats_medics(my_pos, is_attack);
+	assign_formation_marines(my_pos, is_attack);
+	formation::isassigned = true;
+	return;
+}
+void assign_formation_scvs(BWAPI::Position& my_pos, bool is_attack)
+{
+	//- calculating distance: units to center of formation
+	//- calculating distance: spots to center of army
+	//- creating pair vectors for both and sorting them
+	//- send nearest unit to farest spot and vice versa
+
+	std::vector<std::pair<int, SCV *>> unit_vec;
+	std::vector<std::pair<int, BWAPI::Position>> form_vec;
+	BWAPI::Position form_center = get_center_of_mass(formation::line0);
+
+	for (SCV& scv : wilunits::scvs) {
+		int mydist = mhdist(scv.unit->getPosition(), form_center);
+		if (scv.is_militia && mydist < 512) {
+			unit_vec.push_back(std::make_pair(mydist, &scv));
+		}
+	}
+	for (BWAPI::Position p : formation::line0) {
+		int mydist = mhdist(p, wilgroup::player_grd_pos);
+		form_vec.push_back(std::make_pair(mydist, p));
+	}
+	std::sort(unit_vec.begin(), unit_vec.end());
+	std::sort(form_vec.begin(), form_vec.end());
+
+	int imax = (unit_vec.size() < form_vec.size()) ? unit_vec.size() : form_vec.size();
+	for (int i = 0; i < imax; i++) {
+		unit_vec[i].second->set_attack(form_vec[imax - i - 1].second);
+	}
+	return;
+}
+void assign_formation_firebats_medics(BWAPI::Position& my_pos, bool is_attack)
+{
+	//- calculating distance: units to center of formation
+	//- calculating distance: spots to center of army
+	//- creating pair vectors for both and sorting them
+	//- send nearest unit to farest spot and vice versa
+
+	std::vector<std::pair<int, Fighter2 *>> unit_vec;
+	std::vector<std::pair<int, BWAPI::Position>> form_vec;
+	BWAPI::Position form_center = get_center_of_mass(formation::line1);
+
+	for (Fighter2& f : wilunits::firebats) {
+		int mydist = mhdist(f.unit->getPosition(), form_center);
+		if (mydist < 512) {
+			unit_vec.push_back(std::make_pair(mydist, &f));
+		}
+	}
+	for (Fighter2& f : wilunits::medics) {
+		int mydist = mhdist(f.unit->getPosition(), form_center);
+		if (mydist < 512) {
+			unit_vec.push_back(std::make_pair(mydist, &f));
+		}
+	}
+	for (BWAPI::Position p : formation::line1) {
+		int mydist = mhdist(p, wilgroup::player_grd_pos);
+		form_vec.push_back(std::make_pair(mydist, p));
+	}
+	std::sort(unit_vec.begin(), unit_vec.end());
+	std::sort(form_vec.begin(), form_vec.end());
+
+	int imax = (unit_vec.size() < form_vec.size()) ? unit_vec.size() : form_vec.size();
+	for (int i = 0; i < imax; i++) {
+		unit_vec[i].second->set_target(form_vec[imax - i - 1].second, is_attack);
+	}
+	return;
+}
+void assign_formation_marines(BWAPI::Position& my_pos, bool is_attack)
+{
+	//- calculating distance: units to center of formation
+	//- calculating distance: spots to center of army
+	//- creating pair vectors for both and sorting them
+	//- send nearest unit to farest spot and vice versa
+
+	std::vector<std::pair<int, Fighter2 *>> unit_vec;
+	std::vector<std::pair<int, BWAPI::Position>> form_vec;
+	BWAPI::Position form_center = get_center_of_mass(formation::line2);
+
+	for (Fighter2& f : wilunits::marines) {
+		int mydist = mhdist(f.unit->getPosition(), form_center);
+		if (mydist < 512) {
+			unit_vec.push_back(std::make_pair(mydist, &f));
+		}
+	}
+	for (BWAPI::Position p : formation::line2) {
+		int mydist = mhdist(p, wilgroup::player_grd_pos);
+		form_vec.push_back(std::make_pair(mydist, p));
+	}
+	std::sort(unit_vec.begin(), unit_vec.end());
+	std::sort(form_vec.begin(), form_vec.end());
+
+	int imax = (unit_vec.size() < form_vec.size()) ? unit_vec.size() : form_vec.size();
+	for (int i = 0; i < imax; i++) {
+		unit_vec[i].second->set_target(form_vec[imax - i - 1].second, is_attack);
+	}
+	return;
+}
+
 
 
 //if (is_air) {

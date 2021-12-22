@@ -19,6 +19,7 @@ bool check_proxy_buildings();
 bool check_proxy_prod_buildings();
 void check_cannon_rush_end();
 bool check_pressure_on_bunker();
+void check_aborting_fast_expand();
 
 void check_mega_macro();
 void check_abort_rushing();

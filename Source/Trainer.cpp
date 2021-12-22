@@ -264,10 +264,11 @@ bool Trainer::can_build_goliath() {
 
 
 bool Trainer::bring_it_on() {
-	if (willyt::strategy <= 2 &&
-		wilunits::vultures.size() < wilunits::siegetanks.size() &&
-		BWAPI::Broodwar->self()->minerals() >= BWAPI::Broodwar->elapsedTime() / 2 &&
-		BWAPI::Broodwar->self()->minerals() >= BWAPI::Broodwar->self()->gas() * 2) {
+	if (willyt::strategy <= 3 &&
+		wilunits::siegetanks.size() >= 2 &&
+		wilunits::siegetanks.size() > wilunits::vultures.size() &&
+		BWAPI::Broodwar->self()->minerals() >= (int)willyt::my_time &&
+		BWAPI::Broodwar->self()->minerals() >= 2 * BWAPI::Broodwar->self()->gas()) {
 		return true;
 	}
 	if (willyt::strategy == 3 &&

@@ -111,6 +111,9 @@ int sqdist(BWAPI::Unit u0, BWAPI::Position p1) {
 int sqdist(int x0, int y0, int x1, int y1) {
 	return (int)(pow(x0 - x1, 2) + pow(y0 - y1, 2));
 }
+int mhdist(BWAPI::Position p0, BWAPI::Position p1) {
+	return abs(p1.x - p0.x) + abs(p1.y - p0.y);
+}
 
 
 

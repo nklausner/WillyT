@@ -121,6 +121,19 @@ bool check_pressure_on_bunker() {
 	return false;
 }
 
+void check_aborting_fast_expand()
+{
+	if (willyt::fast_expand &&
+		willyt::strategy <= 3 &&
+		willyt::my_time < 300) {
+		willyt::strategy = 1;
+		willyt::go_bio = true;
+		willyt::fast_expand = false;
+		BWAPI::Broodwar->printf("cant fast expand - try strategy 1");
+	}
+	return;
+}
+
 void check_mega_macro() {
 	if (willyt::my_time == 210 &&
 		BWAPI::Broodwar->enemies().size() == 1 &&

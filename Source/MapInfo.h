@@ -53,6 +53,7 @@ private:
 	void draw_tile_box(BWAPI::TilePosition &tile, int dx, int dy, int color);
 	void draw_tile_box_check(BWAPI::TilePosition &tile, int dx, int dy, int color);
 	void draw_tile_vec_index(std::vector<BWAPI::TilePosition> &my_list);
+	void draw_pos_boxes(std::vector<BWAPI::Position>& myvec, int color);
 	void draw_line(std::vector<BWAPI::Position> &v, int c);
 	void draw_pos_vec(std::vector<BWAPI::Position> &v, int c);
 	void draw_cross(BWAPI::Position p, int s, BWAPI::Color c);

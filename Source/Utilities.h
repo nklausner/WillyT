@@ -60,6 +60,8 @@ int sqdist(BWAPI::Unit u0, BWAPI::Unit u1);
 int sqdist(BWAPI::Unit u0, BWAPI::Position p1);
 //no need for square root when comparing
 int sqdist(int x0, int y0, int x1, int y1);
+//manhattan distance of positions
+int mhdist(BWAPI::Position p0, BWAPI::Position p1);
 
 
 //get closest position of a vector

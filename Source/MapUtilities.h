@@ -29,6 +29,7 @@ void fill_map_int(int(&my_map)[1024][1024], int z);
 //convert expo center position to expo center tilepos
 BWAPI::TilePosition get_center_tile(BWAPI::Position p);
 BWAPI::TilePosition get_center_of_mass(std::vector<BWAPI::TilePosition> v);
+BWAPI::Position get_center_of_mass(std::vector<BWAPI::Position> v);
 
 //get vary tile
 BWAPI::TilePosition get_vary_tile(BWAPI::TilePosition t, int i);

@@ -112,7 +112,19 @@ BWAPI::TilePosition get_center_of_mass(std::vector<BWAPI::TilePosition> v) {
 		y += t.y;
 	}
 	int n = (int)v.size();
+	n = (n > 0) ? n : 1;
 	return BWAPI::TilePosition{ x/n , y/n };
+}
+BWAPI::Position get_center_of_mass(std::vector<BWAPI::Position> v) {
+	int x = 0;
+	int y = 0;
+	for (BWAPI::Position p : v) {
+		x += p.x;
+		y += p.y;
+	}
+	int n = (int)v.size();
+	n = (n > 0) ? n : 1;
+	return BWAPI::Position{ x / n , y / n };
 }
 BWAPI::TilePosition get_vary_tile(BWAPI::TilePosition t, int i) {
 	int dx[19] = { 0, 1, 0, +1, -1, 2, 0, +2, -2, +1, -1, +2, -2, 3, 0, +3, -3, +1, -1 };

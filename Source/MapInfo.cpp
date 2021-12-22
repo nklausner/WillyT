@@ -55,7 +55,13 @@ void MapInfo::display() {
 	display_available_scans();
 	display_choke_defense_status();
 
-	draw_line(formation::formvec, BWAPI::Colors::Red);
+	//draw_line(formation::formvec, BWAPI::Colors::Red);
+	if (formation::useformation) {
+		draw_pos_boxes(formation::line0, BWAPI::Colors::Red);
+		draw_pos_boxes(formation::line1, BWAPI::Colors::Red);
+		draw_pos_boxes(formation::line2, BWAPI::Colors::Red);
+		draw_pos_boxes(formation::line3, BWAPI::Colors::Red);
+	}
 
 	//BWAPI::Broodwar->drawCircleMap(wilenemy::grdcenter, 32, BWAPI::Colors::Red, false);
 	//BWAPI::Broodwar->drawCircleMap(wilenemy::aircenter, 32, BWAPI::Colors::Blue, false);
@@ -399,6 +405,15 @@ void MapInfo::draw_tile_box_check(BWAPI::TilePosition& tile, int dx, int dy, int
 	if (tile != BWAPI::TilePositions::None) {
 		draw_tile_box(tile, dx, dy, color);
 	}
+}
+
+void MapInfo::draw_pos_boxes(std::vector<BWAPI::Position>& myvec, int color) {
+	for (BWAPI::Position p : myvec) {
+		if (p != BWAPI::Positions::None) {
+			BWAPI::Broodwar->drawBoxMap(p.x - 11, p.y - 11, p.x + 11, p.y + 11, BWAPI::Color(color), false);
+		}
+	}
+	return;
 }
 
 void MapInfo::draw_line(std::vector<BWAPI::Position> &v, int c) {
