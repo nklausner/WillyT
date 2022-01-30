@@ -128,3 +128,6 @@ crash frame hunt: 37126, 28028, 33929, 13603, 10403, 40888, 18492, 31660 "ondisc
 
 20211004:
 - floating CCs when cannon rushed and similar (DONE)
+
+20220130:
+- fix divide-by-zero in dropmanager, it didnt handle only ghost bio

@@ -101,7 +101,7 @@ void DropManager::initiate_drop()
 			assign_from(siegetanks, 2, my_pos);
 		}
 	}
-	else if (2 * willyt::sup_bio >= willyt::sup_mech)
+	else if (marines.size() + firebats.size() >= 16 && 2 * willyt::sup_bio >= willyt::sup_mech)
 	{
 		int nf = (6 * firebats.size() + 3) / (marines.size() + firebats.size());
 		int nm = 6 - nf;
@@ -109,7 +109,7 @@ void DropManager::initiate_drop()
 		assign_from(firebats, nf, my_pos);
 		assign_from(medics, 2, my_pos);
 	}
-	else
+	else if (willyt::sup_mech >= 16)
 	{
 		int nv = (8 * vultures.size() + 4) / willyt::sup_mech;
 		int nt = (4 * siegetanks.size() + 2) / willyt::sup_mech;
@@ -117,6 +117,12 @@ void DropManager::initiate_drop()
 		assign_from(vultures, nv, my_pos);
 		assign_from(siegetanks, nt, my_pos);
 		assign_from(goliaths, ng, my_pos);
+	}
+	else
+	{
+		it->is_raider = false;
+		dropship = NULL;
+		return;
 	}
 	kills_offset = count_kills_total();
 	kills = 0;
